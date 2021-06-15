@@ -4,10 +4,10 @@ from bot.DbManager import UrlsBdRepository
 
 class Delete(Command):
 
-    def __init__(self, url_repo) -> None:
+    def __init__(self, url_repo,prefix) -> None:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
-
+        self.prefix = prefix
     async def execute(self, send_func, args: [str]):
         if len(args) == 1:
             number_1 = int(args[0])
@@ -22,3 +22,7 @@ class Delete(Command):
 
     def get_name(self):
         return 'delete'
+
+    def get_help(self):
+        return ("Delete url\n" +
+                "Usage: `" + self.prefix + self.get_name() + " <url>`")

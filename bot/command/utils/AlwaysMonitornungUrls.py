@@ -5,7 +5,7 @@ from bot.command.enums.SiteState import SiteState
 from bot.command.utils.EncodingTime import EncoderTime
 
 
-class MonitoringUrl():
+class AlwaysMonitoringUrl():
 
     def __init__(self, url_repo: UrlsBdRepository) -> None:
         super().__init__()
@@ -29,15 +29,24 @@ class MonitoringUrl():
             if new_status.value != old_status:
                 self.url_repo.update_status(url, new_status.value, int(data))
 
-            time_of = data - last_time
-            if new_status == SiteState.READY:
-                msg = (f'{url} 🟢 {self.encoder.encod(time_of)} ')
-                self.result.append(msg)
-                continue
-            elif new_status == SiteState.NOT_READY:
-                resultat = (f'{url} 🔴 {self.encoder.encod(time_of)} ERROR = {status_code}')
-                self.result.append(resultat)
+                time_of = data - last_time
+                if new_status == SiteState.READY:
+                    msg = (f'{url} WORK IN {self.encoder.encod(time_of)} ')
+                    self.result.append(msg)
+                    continue
+                elif new_status == SiteState.NOT_READY:
+                    resultat = (f'{url} FALL IN {self.encoder.encod(time_of)} ERROR = {status_code}')
+                    self.result.append(resultat)
 
+            # return self.result
             if len(self.result) != 0:
                 result = '\n'.join(self.result)
                 return result
+
+                if new_status == SiteState.READY:
+                    msg = (f'{url} WORK IN {self.encoder.encod(time_of)} ')
+                    self.result.append(msg)
+                    continue
+                elif new_status == SiteState.NOT_READY:
+                    resultat = (f'{url} FALL IN {self.encoder.encod(time_of)} ERROR = {status_code}')
+                    self.result.append(resultat)
