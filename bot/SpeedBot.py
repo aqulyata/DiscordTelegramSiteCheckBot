@@ -1,5 +1,6 @@
 import discord
 
+# from bot.command.utils.MonitoringUtils import CheckUrl
 from bot.Checker import Checker
 from bot.DbManager import DbConnectionManager
 from bot.command.Add import Add
@@ -50,7 +51,6 @@ class DiscordChecker(discord.Client):
 db_manager = DbConnectionManager()
 checker = Checker(db_manager.get_url_repository())
 bot = DiscordChecker()
-
 bot.register_command(Delete(db_manager.get_url_repository()))
 bot.register_command(Add(db_manager.get_url_repository()))
 bot.register_command(Info(db_manager.get_url_repository()))

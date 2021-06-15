@@ -4,6 +4,7 @@ import time
 import requests
 from bot.DbManager import UrlsBdRepository
 from bot.command.enums.SiteState import SiteState
+from bot.command.utils.EncodingTime import EncoderTime
 
 
 class Checker:
@@ -11,6 +12,7 @@ class Checker:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.t1 = None
+        self.encoder = EncoderTime()
 
     def start(self, send_func):
         if self.t1 is not None and self.t1.is_alive():
@@ -38,8 +40,8 @@ class Checker:
 
                     time_of = data - last_time
                     if new_status == SiteState.READY:
-                        send_func(f'```{url} WORK  IN SEC {time_of}```')
+                        send_func(f'```{url} WORK IN  {self.encoder.encod(time_of)}```')
                     else:
-                        send_func(f'```{url} FALL, TIME = {time_of} ERROR = {status_code}```')
+                        send_func(f'```{url} FALL IN {self.encoder.encod(time_of)} ERROR = {status_code}```')
             time.sleep(1)
         print('stop checking')

@@ -9,7 +9,7 @@ class Stop(Command):
 
     async def execute(self, send_func, split_msg):
         self.url_repo.changing_state(False)
-        send_func('Вы остановили процесс проверки!')
+        await send_func('```Вы остановили процесс проверки!```')
 
     def get_name(self):
         return 'stop'

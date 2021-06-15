@@ -76,3 +76,7 @@ class UrlsBdRepository:
         else:
             self.sql.execute(f"UPDATE states SET state = {state}")
         self.db.commit()
+
+    def all_urls(self):
+        cursor = self.sql.execute(f"SELECT url FROM users")
+        return list(cursor.fetchall())
