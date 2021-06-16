@@ -12,10 +12,10 @@ class Start(Command):
 
     async def execute(self, send_func, split_msg):
         self.url_repo.changing_state(True)
-        if self.checker.start(send_func) == True:
-            await send_func('```Вы запустили процесс проверки!```')
-        else:
-            await send_func('```Уже запущено!```')
+        await self.checker.check()
+        await send_func('```Вы запустили процесс проверки!```')
+        # else:
+        #     await send_func('```Уже запущено!```')
 
     def get_name(self):
         return 'start'

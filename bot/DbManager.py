@@ -6,13 +6,14 @@ class DbConnectionManager():
 
     def __init__(self) -> None:
         super().__init__()
-        self.db = sqlite3.connect('url.db', check_same_thread=False)
+        self.db = sqlite3.connect('urls.db', check_same_thread=False)
         self.sql = self.db.cursor()
         self.url_repo = UrlsBdRepository(self.db)
         self.sql.execute("""CREATE TABLE IF NOT EXISTS users (
             url TEXT,
             status INT,
-            data INT
+            data INT,
+            channel TEXT
         ) """)
         self.sql.execute("""CREATE TABLE IF NOT EXISTS states (
             state INT
@@ -31,14 +32,18 @@ class UrlsBdRepository:
         self.db = sqlite3.connect('url.db', check_same_thread=False)
         self.sql = self.db.cursor()
 
+    def update_chnl_name(self, chnl_name, url):
+        self.sql.execute(f"UPDATE users SET channel = {chnl_name} WHERE url = '{url}'")
+        self.db.commit()
+
     def find_url(self, url):
         cursor = self.sql.execute(f"SELECT url FROM users WHERE  url = '{url}'")
         return cursor.fetchall()
 
-    def check_and_recording_url_in_db(self, url, status, data):
+    def check_and_recording_url_in_db(self, url, status, data, chnl_name):
         cursor = self.sql.execute(f"SELECT url FROM users WHERE  url = '{url}'")
         if cursor.fetchone() is None:
-            self.sql.execute(f"INSERT INTO users VALUES(?,?,?)", (url, status, data))
+            self.sql.execute(f"INSERT INTO users VALUES(?,?,?,?)", (url, status, data, chnl_name))
             self.db.commit()
             return True
         return False

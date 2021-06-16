@@ -13,19 +13,21 @@ class Add(Command):
         self.prefix = prefix
 
     async def execute(self, send_func, args: [str]):
-        if len(args) == 1:
+        if len(args) == 2:
             url = args[0]
+            chnl_name = args[1]
             status = SiteState.UNDEFINDED.value
             data = time.time()
-            if self.url_repo.check_and_recording_url_in_db(url, status, data):
+            if self.url_repo.check_and_recording_url_in_db(url, status, data, chnl_name):
                 await send_func("```Добавлено!```")
             else:
                 await send_func("```Уже добавлено```")
 
         elif len(args) == 0:
             await send_func('```Вы забыли указать параметр```')
-        else:
+        elif len(args) > 2:
             await send_func('```Извините, вы указали лишний  параметр```')
+
     def get_name(self):
         return 'add'
 
