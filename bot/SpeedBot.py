@@ -40,6 +40,7 @@ class DiscordChecker(discord.Client):
                 self.embed.add_field(name=self.commands[key].get_name(), value=self.commands[key].get_help(),
                                      inline=False)
             await message.channel.send(embed=self.embed)
+            self.embed.clear_fields()
 
         if cmd not in self.commands:
             return
