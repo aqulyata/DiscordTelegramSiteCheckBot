@@ -38,6 +38,7 @@ class MonitoringUrl():
                 resultat = (f'{url} 🔴 {self.encoder.encod(time_of)} ERROR = {status_code}')
                 self.result.append(resultat)
 
-            if len(self.result) != 0:
-                result = '\n'.join(self.result)
-                return result
+            return (self.result)
+            # if len(self.result) != 0:
+            #     result = '\n'.join(self.result)
+            #     return result

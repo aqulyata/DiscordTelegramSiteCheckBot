@@ -22,9 +22,10 @@ class Add(Command):
             else:
                 await send_func("```Уже добавлено```")
 
-        else:
+        elif len(args) == 0:
             await send_func('```Вы забыли указать параметр```')
-
+        else:
+            await send_func('```Извините, вы указали лишний  параметр```')
     def get_name(self):
         return 'add'
 

@@ -4,11 +4,11 @@ from bot.Checker import Checker
 from bot.DbManager import DbConnectionManager
 from bot.command.Add import Add
 from bot.command.Delete import Delete
-# from bot.command.Help import Help
 from bot.command.Info import Info
 from bot.command.Start import Start
 from bot.command.Stop import Stop
 from bot.command.base.Command import Command
+import os
 
 
 class DiscordChecker(discord.Client):
@@ -59,11 +59,14 @@ class DiscordChecker(discord.Client):
 
 
 if __name__ == '__main__':
-    with open('config.yaml') as f:
-        data = yaml.load(f, Loader=yaml.FullLoader)
-        prefix = data['prefix']
-        token = data['token']
 
+    if os.stat("config.yaml").st_size != 0:
+        with open('config.yaml') as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+            prefix = data['prefix']
+            token = data['token']
+    else:
+        pass
     db_manager = DbConnectionManager()
     checker = Checker(db_manager.get_url_repository())
     bot = DiscordChecker(prefix)
@@ -75,3 +78,5 @@ if __name__ == '__main__':
 
     bot.run(token)
 # todo проверка на наличиче префикса и наличиче самого файла yaml
+# todo убрать async def в проекте и заменить на def
+

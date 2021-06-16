@@ -79,4 +79,4 @@ class UrlsBdRepository:
 
     def all_urls(self):
         cursor = self.sql.execute(f"SELECT url FROM users")
-        return list(cursor.fetchall())
+        return cursor.fetchall()

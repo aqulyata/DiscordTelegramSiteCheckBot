@@ -8,6 +8,7 @@ class Delete(Command):
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.prefix = prefix
+        self.result = []
 
     async def execute(self, send_func, args: [str]):
         if len(args) == 1:
@@ -18,8 +19,11 @@ class Delete(Command):
             else:
                 await send_func('```Такого элемента нет```')
         else:
+            self.result.append(f'{(str(self.url_repo.all_urls()))}')
 
-            await send_func(f'```{self.url_repo.all_urls()}```')
+            if len(self.result) != 0:
+                result = '\n'.join(self.result)
+                await send_func(f'```{result}```')
 
     def get_name(self):
         return 'delete'

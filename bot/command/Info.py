@@ -1,3 +1,6 @@
+import asyncio
+import concurrent.futures
+
 from bot.command.base.Command import Command
 from bot.DbManager import UrlsBdRepository
 from bot.command.utils.MonitoringUtils import MonitoringUrl
@@ -11,8 +14,21 @@ class Info(Command):
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
         self.prefix = prefix
+
     async def execute(self, send_func, args: [str]):
-        await send_func(f'```{self.monitoring_urls.check()}```')
+        loop = asyncio.get_running_loop()
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            result = await loop.run_in_executor(
+                pool, self.monitoring_urls.check)
+            # for i in result:
+            #     splites_res = i.split()
+            #     data = splites_res.pop(2)
+            #     time_of = self.encoder.encod(float(data))
+            #     splites_res.append(time_of)
+            if len(result) != 0:
+
+                result = '\n'.join(result)
+                await send_func(f'```{result}```')
 
     def get_name(self):
         return 'info'
