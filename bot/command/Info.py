@@ -1,10 +1,8 @@
-import asyncio
-import concurrent.futures
-
-from bot.command.base.Command import Command
 from bot.DbManager import UrlsBdRepository
-from bot.command.utils.MonitoringUtils import MonitoringUrl
+from bot.command.base.Command import Command
+from bot.command.enums.SiteState import SiteState
 from bot.command.utils.EncodingTime import EncoderTime
+from bot.command.utils.MonitoringUtils import MonitoringUrl
 
 
 class Info(Command):
@@ -14,21 +12,23 @@ class Info(Command):
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
         self.prefix = prefix
+        self.result = []
 
     async def execute(self, send_func, args: [str]):
-        loop = asyncio.get_running_loop()
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            result = await loop.run_in_executor(
-                pool, self.monitoring_urls.check)
-            # for i in result:
-            #     splites_res = i.split()
-            #     data = splites_res.pop(2)
-            #     time_of = self.encoder.encod(float(data))
-            #     splites_res.append(time_of)
-            if len(result) != 0:
 
-                result = '\n'.join(result)
-                await send_func(f'```{result}```')
+        elements = self.monitoring_urls.check()
+        if elements[1].value != elements[5]:
+            self.url_repo.update_status(elements[3], elements[1].value, elements[0])
+        time_of = elements[0] - elements[4]
+        if elements[1] == SiteState.READY:
+            msg = (f'```🟢{elements[3]}  {self.encoder.encod(time_of)}🟢 ```')
+            self.result.append(msg)
+        else:
+            msg = (f'```🔴 {elements[3]} {self.encoder.encod(time_of)} ERROR = {elements[2]}🔴```')
+            self.result.append(msg)
+        if len(self.result) != 0:
+            result = '\n'.join(self.result)
+            await send_func(result)
 
     def get_name(self):
         return 'info'

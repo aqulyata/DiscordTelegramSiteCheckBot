@@ -19,11 +19,11 @@ class Delete(Command):
             else:
                 await send_func('```Такого элемента нет```')
         else:
-            self.result.append(f'{(str(self.url_repo.all_urls()))}')
+            # self.result.append(f'{(str(self.url_repo.all_urls()))}')
 
-            if len(self.result) != 0:
-                result = '\n'.join(self.result)
-                await send_func(f'```{result}```')
+            # if len(self.result) != 0:
+            #     result = '\n'.join(self.result)
+            await send_func(f'```{self.url_repo.all_urls()}```')
 
     def get_name(self):
         return 'delete'
