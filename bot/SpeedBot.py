@@ -81,7 +81,7 @@ if __name__ == '__main__':
     bot.register_command(Info(db_manager.get_url_repository(), prefix))
     bot.register_command(Start(db_manager.get_url_repository(), checker, prefix))
     bot.register_command(Stop(db_manager.get_url_repository(), prefix))
-    bot.register_command(Help(bot.get_tuple()))
+    bot.register_command(Help(bot.get_tuple(), prefix))
     bot.run(token)
 
 

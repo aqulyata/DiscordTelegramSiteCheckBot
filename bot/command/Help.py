@@ -5,10 +5,11 @@ from bot.command.base.Command import Command
 
 class Help(Command):
 
-    def __init__(self, commands) -> None:
+    def __init__(self, commands, prefix) -> None:
         super().__init__()
         self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
         self.commands = commands
+        self.prefix = prefix
 
     async def execute(self, send_func, args: [str]):
         self.embed.add_field(name="developed by aqulasoft.com",
@@ -23,3 +24,7 @@ class Help(Command):
 
     def get_name(self):
         return 'help'
+
+    def get_help(self):
+        return ("Show all commands\n" +
+                "Usage: `" + self.prefix + self.get_name() + "`")
