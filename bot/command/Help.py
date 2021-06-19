@@ -11,7 +11,7 @@ class Help(Command):
         self.commands = commands
         self.prefix = prefix
 
-    async def execute(self, send_func, args: [str]):
+    def execute(self, send_func, args: [str]):
         self.embed.add_field(name="developed by aqulasoft.com",
                              value="https://github.com/aqulyata/DiscordTelegramSiteCheckBot",
                              inline=False, )
@@ -19,7 +19,7 @@ class Help(Command):
             self.embed.add_field(name=self.commands[key].get_name(), value=self.commands[key].get_help(),
                                  inline=False)
         print(self.embed)
-        await send_func(None, self.embed)
+        send_func(None, self.embed)
         self.embed.clear_fields()
 
     def get_name(self):

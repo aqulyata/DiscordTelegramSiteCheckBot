@@ -10,12 +10,12 @@ class Start(Command):
         self.checker: Checker = checker
         self.prefix = prefix
 
-    async def execute(self, send_func, split_msg):
+    def execute(self, send_func, split_msg):
         self.url_repo.changing_state(True)
-        if self.checker.start(send_func):
-            await send_func('```Вы запустили процесс проверки!```')
-        else:
-            await send_func('```Уже запущено!```')
+        self.checker.start(send_func)
+        #     await send_func('```Вы запустили процесс проверки!```')
+        # else:
+        #     await send_func('```Уже запущено!```')
 
     def get_name(self):
         return 'start'

@@ -1,6 +1,8 @@
+import asyncio
 import os
 
 import discord
+import nest_asyncio
 import yaml
 
 from bot.Checker import Checker
@@ -52,10 +54,33 @@ class DiscordChecker(discord.Client):
         else:
             args = []
 
-        await self.commands[cmd].execute(lambda msg, embed=None: message.channel.send(msg, embed=embed), args)
-        # async def execute_thread(self, executor, send_func):
-        #     loop = asyncio.get_event_loop()
-        #     await loop.run_in_executor(executor, self.check(send_func), loop)
+        def asyncio_run(future, as_task=False):
+            try:
+                loop = asyncio.get_running_loop()
+            except RuntimeError:  # no event loop running:
+                loop = asyncio.new_event_loop()
+                return loop.run_until_complete(_to_task(future, as_task, loop))
+            else:
+                nest_asyncio.apply(loop)
+                return asyncio.run(_to_task(future, as_task, loop))
+
+        def _to_task(future, as_task, loop):
+            if not as_task or isinstance(future, asyncio.Task):
+                return future
+            return loop.create_task(future)
+
+        async def coroutine(msg,):
+            print(123123)
+            await message.channel.send(msg)
+
+        def send_func(msg):
+            # app.run(main())
+            # asyncio.new_event_loop().create_task(coroutine())
+            asyncio_run(coroutine(msg), False)
+            # asyncio.get_event_loop().run_until_complete(coroutine(msg))
+
+        self.commands[cmd].execute(send_func, args)
+
 
     def get_tuple(self):
         return self.commands
@@ -83,5 +108,3 @@ if __name__ == '__main__':
     bot.register_command(Stop(db_manager.get_url_repository(), prefix))
     bot.register_command(Help(bot.get_tuple(), prefix))
     bot.run(token)
-
-

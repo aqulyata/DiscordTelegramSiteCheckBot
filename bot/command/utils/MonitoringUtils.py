@@ -5,6 +5,7 @@ import requests
 from bot.DbManager import UrlsBdRepository
 from bot.command.enums.SiteState import SiteState
 from bot.command.utils.EncodingTime import EncoderTime
+from bot.command.utils.dataclasses.CheckResult import CheckResult
 
 
 class MonitoringUrl():
@@ -26,9 +27,9 @@ class MonitoringUrl():
             except Exception:
                 status_code = -1
             new_status = SiteState.READY if status_code == 200 else SiteState.NOT_READY
-
             data = time.time()
-            result.append((data, new_status, status_code, url, last_time, old_status))
+            check_res = CheckResult(url, data, last_time, status_code, new_status, old_status)
+            result.append(check_res)
         return result
         # if new_status.value != old_status:
         #     self.url_repo.update_status(url, new_status.value, int(data))
