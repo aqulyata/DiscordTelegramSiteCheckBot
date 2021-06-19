@@ -1,4 +1,6 @@
+import asyncio
 import threading
+import time
 
 from bot.DbManager import UrlsBdRepository
 from bot.command.enums.SiteState import SiteState
@@ -7,26 +9,25 @@ from bot.command.utils.MonitoringUtils import MonitoringUrl
 
 
 class Checker:
-    def __init__(self, url_repo: UrlsBdRepository) -> None:
+    def __init__(self, url_repo: UrlsBdRepository, bot) -> None:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.t1 = None
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
+        self.bot = bot
 
     def start(self, send_func):
         if self.t1 is not None and self.t1.is_alive():
             return False
-        self.send_func = send_func
-        self.t1 = threading.Thread(target=self.check, args=())
+
+        loop = asyncio.get_running_loop()
+
+        self.t1 = threading.Thread(target=lambda: loop.create_task(self.check(send_func)), args=())
         self.t1.start()
         return True
 
-    # async def execute_thread(self, executor, send_func):
-    #     loop = asyncio.get_event_loop()
-    #     await loop.run_in_executor(executor, self.check(send_func), loop)
-
-    def check(self):
+    async def check(self, send_func):
         while self.url_repo.get_state():
             elements = self.monitoring_urls.check()
             for check in elements:
@@ -34,10 +35,10 @@ class Checker:
                     self.url_repo.update_status(check.url, check.new_status.value, int(check.data))
                     if check.new_status == SiteState.READY:
                         time_of = check.data - check.last_time
-                        self.send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
+                        await send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
                         print(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
 
                     else:
                         time_of = check.data - check.last_time
-                        self.send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
+                        await send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
                         print(f'```🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴```')

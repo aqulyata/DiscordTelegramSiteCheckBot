@@ -14,7 +14,7 @@ class Info(Command):
         self.prefix = prefix
         self.result = []
 
-    def execute(self, send_func, args: [str]):
+    async def execute(self, send_func, args: [str]):
         results = []
         elements = self.monitoring_urls.check()
         for check in elements:
@@ -29,7 +29,7 @@ class Info(Command):
                 results.append(f'🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴')
         if len(results) != 0:
             results = '\n'.join(results)
-            send_func(f'```{results}```')
+            await send_func(f'```{results}```')
 
     def get_name(self):
         return 'info'

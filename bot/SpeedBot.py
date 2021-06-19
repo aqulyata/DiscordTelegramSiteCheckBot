@@ -2,7 +2,6 @@ import asyncio
 import os
 
 import discord
-import nest_asyncio
 import yaml
 
 from bot.Checker import Checker
@@ -21,7 +20,7 @@ class DiscordChecker(discord.Client):
         super().__init__()
         self.commands = {}
         self.prefix = prefix
-        self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
+        # self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
 
     async def on_ready(self):
         print('Logged on as', self.user)
@@ -36,16 +35,6 @@ class DiscordChecker(discord.Client):
         text = text[len(self.prefix):]
         splited_args = text.split()
         cmd = text.split()[0]
-        #
-        # if cmd == 'help':
-        #     self.embed.add_field(name="developed by aqulasoft.com",
-        #                          value="https://github.com/aqulyata/DiscordTelegramSiteCheckBot",
-        #                          inline=False, )
-        #     for key in self.commands:
-        #         self.embed.add_field(name=self.commands[key].get_name(), value=self.commands[key].get_help(),
-        #                              inline=False)
-        #     await message.channel.send(embed=self.embed)
-        #     self.embed.clear_fields()
 
         if cmd not in self.commands:
             return
@@ -54,33 +43,11 @@ class DiscordChecker(discord.Client):
         else:
             args = []
 
-        def asyncio_run(future, as_task=False):
-            try:
-                loop = asyncio.get_running_loop()
-            except RuntimeError:  # no event loop running:
-                loop = asyncio.new_event_loop()
-                return loop.run_until_complete(_to_task(future, as_task, loop))
-            else:
-                nest_asyncio.apply(loop)
-                return asyncio.run(_to_task(future, as_task, loop))
+        async def test(msg, embed=None):
+            await message.channel.send(msg, embed=embed)
 
-        def _to_task(future, as_task, loop):
-            if not as_task or isinstance(future, asyncio.Task):
-                return future
-            return loop.create_task(future)
-
-        async def coroutine(msg,):
-            print(123123)
-            await message.channel.send(msg)
-
-        def send_func(msg):
-            # app.run(main())
-            # asyncio.new_event_loop().create_task(coroutine())
-            asyncio_run(coroutine(msg), False)
-            # asyncio.get_event_loop().run_until_complete(coroutine(msg))
-
-        self.commands[cmd].execute(send_func, args)
-
+        if self.commands[cmd].execute is not None:
+            await self.commands[cmd].execute(test, args)
 
     def get_tuple(self):
         return self.commands
@@ -99,8 +66,8 @@ if __name__ == '__main__':
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
-    checker = Checker(db_manager.get_url_repository())
     bot = DiscordChecker(prefix)
+    checker = Checker(db_manager.get_url_repository(), bot)
     bot.register_command(Delete(db_manager.get_url_repository(), prefix))
     bot.register_command(Add(db_manager.get_url_repository(), prefix))
     bot.register_command(Info(db_manager.get_url_repository(), prefix))

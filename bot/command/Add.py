@@ -12,20 +12,20 @@ class Add(Command):
         self.url_repo: UrlsBdRepository = url_repo
         self.prefix = prefix
 
-    def execute(self, send_func, args: [str]):
+    async def execute(self, send_func, args: [str]):
         if len(args) == 1:
             url = args[0]
             status = SiteState.UNDEFINDED.value
             data = time.time()
             if self.url_repo.check_and_recording_url_in_db(url, status, data):
-                send_func("```Добавлено!```")
+                await send_func("```Добавлено!```")
             else:
-                send_func("```Уже добавлено```")
+                await send_func("```Уже добавлено```")
 
         elif len(args) == 0:
-            send_func('```Вы забыли указать параметр```')
+            await send_func('```Вы забыли указать параметр```')
         else:
-            send_func('```Извините, вы указали лишний  параметр```')
+            await send_func('```Извините, вы указали лишний  параметр```')
 
     def get_name(self):
         return 'add'
