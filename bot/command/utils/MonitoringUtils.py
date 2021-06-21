@@ -31,20 +31,3 @@ class MonitoringUrl():
             check_res = CheckResult(url, data, last_time, status_code, new_status, old_status)
             result.append(check_res)
         return result
-        # if new_status.value != old_status:
-        #     self.url_repo.update_status(url, new_status.value, int(data))
-        #     print(132)
-        #
-        # time_of = data - last_time
-        # if new_status == SiteState.READY:
-        #     msg = (f'{url} 🟢 {self.encoder.encod(time_of)} ')
-        #     self.result.append(msg)
-        #     continue
-        # elif new_status == SiteState.NOT_READY:
-        #     resultat = (f'{url} 🔴 {self.encoder.encod(time_of)} ERROR = {status_code}')
-        #     self.result.append(resultat)
-        #
-        #     return (self.result)
-        # if len(self.result) != 0:
-        #     result = '\n'.join(self.result)
-        #     return result

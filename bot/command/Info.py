@@ -3,7 +3,7 @@ from bot.command.base.Command import Command
 from bot.command.enums.SiteState import SiteState
 from bot.command.utils.EncodingTime import EncoderTime
 from bot.command.utils.MonitoringUtils import MonitoringUrl
-from bot.command.utils.dataclasses.CheckResult import CheckResult
+
 
 class Info(Command):
     def __init__(self, url_repo: UrlsBdRepository, prefix) -> None:
