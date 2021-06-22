@@ -1,4 +1,3 @@
-import asyncio
 import os
 
 import discord
@@ -16,14 +15,20 @@ from bot.command.base.Command import Command
 
 
 class DiscordChecker(discord.Client):
-    def __init__(self, prefix: str):
+    def __init__(self, prefix: str, checker: Checker):
         super().__init__()
         self.commands = {}
         self.prefix = prefix
         # self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
+        self.checker = checker
 
     async def on_ready(self):
         print('Logged on as', self.user)
+
+        # async def test(msg, message: discord.Message):
+        #     await message.channel.send(msg)
+        #
+        # self.checker.start(test)
 
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
@@ -66,8 +71,8 @@ if __name__ == '__main__':
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
-    bot = DiscordChecker(prefix)
-    checker = Checker(db_manager.get_url_repository(), bot)
+    checker = Checker(db_manager.get_url_repository())
+    bot = DiscordChecker(prefix, checker)
     bot.register_command(Delete(db_manager.get_url_repository(), prefix))
     bot.register_command(Add(db_manager.get_url_repository(), prefix))
     bot.register_command(Info(db_manager.get_url_repository(), prefix))

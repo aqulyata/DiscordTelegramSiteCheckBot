@@ -9,17 +9,16 @@ from bot.command.utils.MonitoringUtils import MonitoringUrl
 
 
 class Checker:
-    def __init__(self, url_repo: UrlsBdRepository, bot) -> None:
+    def __init__(self, url_repo: UrlsBdRepository) -> None:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.t1 = None
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
-        self.bot = bot
 
     def start(self, send_func):
         if self.t1 is not None and self.t1.is_alive():
-            return False
+            return
 
         loop = asyncio.get_running_loop()
 
@@ -42,3 +41,4 @@ class Checker:
                         time_of = check.data - check.last_time
                         await send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
                         print(f'```🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴```')
+            time.sleep(300)
