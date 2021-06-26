@@ -2,4 +2,4 @@
 #### Discord Check Site Bot
 
 ##### Add
-![alt text](screenshots/CommandAdd.png "")
+<img src = "screenshots\
