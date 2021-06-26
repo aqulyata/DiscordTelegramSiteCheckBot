@@ -12,7 +12,7 @@ class Help(Command):
         self.commands = commands
         self.prefix = prefix
 
-    async def execute(self, send_func, args: [str]):
+    def execute(self, send_func, args: [str]):
         embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
         embed.add_field(name="developed by aqulasoft.com",
                         value="https://github.com/aqulyata/DiscordTelegramSiteCheckBot",
@@ -22,7 +22,7 @@ class Help(Command):
                             inline=False)
         embed.description = "test"
 
-        await send_func(None, embed)
+        send_func(None, embed)
 
     def get_name(self):
         return 'help'

@@ -5,7 +5,6 @@ class Command:
 
     def get_name(self):
         ...
+
     def get_help(self):
         ...
-
-

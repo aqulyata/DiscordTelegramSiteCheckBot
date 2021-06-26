@@ -8,9 +8,9 @@ class Stop(Command):
         self.url_repo: UrlsBdRepository = url_repo
         self.prefix = prefix
 
-    async def execute(self, send_func, split_msg):
+    def execute(self, send_func, split_msg):
         self.url_repo.changing_state(False)
-        await send_func('```Вы остановили процесс проверки!```')
+        send_func('```Вы остановили процесс проверки!```')
 
     def get_name(self):
         return 'stop'

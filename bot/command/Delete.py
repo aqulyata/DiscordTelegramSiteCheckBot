@@ -10,20 +10,16 @@ class Delete(Command):
         self.prefix = prefix
         self.result = []
 
-    async def execute(self, send_func, args: [str]):
+    def execute(self, send_func, args: [str]):
         if len(args) == 1:
             number_1 = int(args[0])
             number = number_1 - 1
             if self.url_repo.delete_element_in_db(number):
-                await send_func('```Удалено!```')
+                send_func('```Удалено!```')
             else:
-                await send_func('```Такого элемента нет```')
+                send_func('```Такого элемента нет```')
         else:
-            # self.result.append(f'{(str(self.url_repo.all_urls()))}')
-
-            # if len(self.result) != 0:
-            #     result = '\n'.join(self.result)
-            await send_func(f'```{self.url_repo.all_urls()}```')
+            send_func(f'```{self.url_repo.all_urls()}```')
 
     def get_name(self):
         return 'delete'

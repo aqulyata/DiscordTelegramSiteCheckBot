@@ -1,4 +1,3 @@
-import asyncio
 import threading
 import time
 
@@ -16,29 +15,32 @@ class Checker:
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
 
-    def start(self, send_func):
+    def start(self, send_func, time_of_checking):
+
         if self.t1 is not None and self.t1.is_alive():
-            return
+            return False
+        if self.url_repo.get_state():
+            self.t1 = threading.Thread(target=lambda: self.check(send_func, time_of_checking), args=())
+            self.t1.start()
+            return True
+        else:
+            return False
 
-        loop = asyncio.get_running_loop()
-
-        self.t1 = threading.Thread(target=lambda: loop.create_task(self.check(send_func)), args=())
-        self.t1.start()
-        return True
-
-    async def check(self, send_func):
+    def check(self, send_func, time_of_checking):
+        results = []
         while self.url_repo.get_state():
             elements = self.monitoring_urls.check()
             for check in elements:
                 if check.new_status.value != check.old_status:
                     self.url_repo.update_status(check.url, check.new_status.value, int(check.data))
+                    time_of = check.data - check.last_time
                     if check.new_status == SiteState.READY:
-                        time_of = check.data - check.last_time
-                        await send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
-                        print(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
-
+                        results.append(f'🟢{check.url} {self.encoder.encod(time_of)}🟢')
                     else:
-                        time_of = check.data - check.last_time
-                        await send_func(f'```🟢{check.url} {self.encoder.encod(time_of)}🟢```')
-                        print(f'```🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴```')
-            time.sleep(300)
+                        results.append(f'🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴')
+
+                if len(results) != 0:
+                    results = '\n'.join(results)
+                    send_func(f'```{results}```')
+
+            time.sleep(int(time_of_checking))

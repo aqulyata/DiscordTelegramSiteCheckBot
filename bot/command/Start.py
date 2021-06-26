@@ -10,16 +10,21 @@ class Start(Command):
         self.checker: Checker = checker
         self.prefix = prefix
 
-    async def execute(self, send_func, split_msg):
-        self.url_repo.changing_state(True)
-        if self.checker.start(send_func):
-            await send_func('```Вы запустили процесс проверки!```')
+    def execute(self, send_func, args: [str]):
+        if len(args) == 0:
+            time_of_checking = 86400
+            send_func('``` You forgot give argument time now its 1 day ```')
         else:
-            await send_func('```Уже запущено!```')
+            time_of_checking = args[0]
+        self.url_repo.changing_state(True)
+        if self.checker.start(send_func, time_of_checking):
+            send_func('```Вы запустили процесс проверки!```')
+        else:
+            send_func('```Уже запущено!```')
 
     def get_name(self):
         return 'start'
 
     def get_help(self):
-        return ("Start process of checking\n" +
-                "Usage: `" + self.prefix + self.get_name() + "`")
+        return ("Start process of checking with time\n" +
+                "Usage: `" + self.prefix + self.get_name() + "<time of checking>")

@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 import discord
@@ -25,34 +26,32 @@ class DiscordChecker(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
 
-        # async def test(msg, message: discord.Message):
-        #     await message.channel.send(msg)
-        #
-        # self.checker.start(test)
-
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        text = message.content
+        if str(message.author.id) in white_list:
 
-        if not text.startswith(self.prefix):
-            return
-        text = text[len(self.prefix):]
-        splited_args = text.split()
-        cmd = text.split()[0]
+            text = message.content
 
-        if cmd not in self.commands:
-            return
-        if len(splited_args) > 1:
-            args = splited_args[1:]
-        else:
-            args = []
+            if not text.startswith(self.prefix):
+                return
+            text = text[len(self.prefix):]
+            splited_args = text.split()
+            cmd = text.split()[0]
 
-        async def test(msg, embed=None):
-            await message.channel.send(msg, embed=embed)
+            if cmd not in self.commands:
+                return
+            if len(splited_args) > 1:
+                args = splited_args[1:]
+            else:
+                args = []
+            loop = asyncio.get_event_loop()
 
-        if self.commands[cmd].execute is not None:
-            await self.commands[cmd].execute(test, args)
+            def test(msg, embed=None):
+                loop.create_task(message.channel.send(msg, embed=embed))
+
+            if self.commands[cmd].execute is not None:
+                self.commands[cmd].execute(test, args)
 
     def get_tuple(self):
         return self.commands
@@ -68,6 +67,7 @@ if __name__ == '__main__':
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             token = data['token']
+            white_list = data['white_list']
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
@@ -80,3 +80,6 @@ if __name__ == '__main__':
     bot.register_command(Stop(db_manager.get_url_repository(), prefix))
     bot.register_command(Help(bot.get_tuple(), prefix))
     bot.run(token)
+
+
+# todo white list
