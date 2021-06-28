@@ -5,7 +5,7 @@ class DbConnectionManager():
 
     def __init__(self) -> None:
         super().__init__()
-        self.db = sqlite3.connect('url.db', check_same_thread=False)
+        self.db = sqlite3.connect('db/url.db', check_same_thread=False)
         self.sql = self.db.cursor()
         self.url_repo = UrlsBdRepository(self.db)
         self.sql.execute("""CREATE TABLE IF NOT EXISTS users (
@@ -26,8 +26,7 @@ class DbConnectionManager():
 class UrlsBdRepository:
     def __init__(self, connection) -> None:
         super().__init__()
-        self.connection = connection
-        self.db = sqlite3.connect('url.db', check_same_thread=False)
+        self.db = connection
         self.sql = self.db.cursor()
 
     def find_url(self, url):
