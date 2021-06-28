@@ -1,5 +1,5 @@
-from DiscordTelegramSiteCheckBot.command.base.Command import Command
-from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from discord_telegram_site_check_bot.command.base.Command import Command
+from discord_telegram_site_check_bot.DbManager import UrlsBdRepository
 
 
 class Delete(Command):

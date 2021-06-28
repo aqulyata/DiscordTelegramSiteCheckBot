@@ -8,4 +8,4 @@ COPY config.yaml .
 
 COPY . .
 
-CMD [ "python3", "-m" , "DiscordTelegramSiteCheckBot"]
+CMD [ "python3", "-m" , "discord_telegram_site_check_bot"]
