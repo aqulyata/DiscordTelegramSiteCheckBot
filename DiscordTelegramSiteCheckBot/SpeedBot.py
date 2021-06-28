@@ -4,20 +4,21 @@ import os
 import discord
 import yaml
 
-from bot.Checker import Checker
-from bot.DbManager import DbConnectionManager
-from bot.command.Add import Add
-from bot.command.Delete import Delete
-from bot.command.Help import Help
-from bot.command.Info import Info
-from bot.command.Start import Start
-from bot.command.Stop import Stop
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.Checker import Checker
+from DiscordTelegramSiteCheckBot.DbManager import DbConnectionManager
+from DiscordTelegramSiteCheckBot.command.Add import Add
+from DiscordTelegramSiteCheckBot.command.Delete import Delete
+from DiscordTelegramSiteCheckBot.command.Help import Help
+from DiscordTelegramSiteCheckBot.command.Info import Info
+from DiscordTelegramSiteCheckBot.command.Start import Start
+from DiscordTelegramSiteCheckBot.command.Stop import Stop
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 
 
 class DiscordChecker(discord.Client):
-    def __init__(self, prefix: str, checker: Checker):
+    def __init__(self, prefix: str, checker: Checker, white_list: [str]):
         super().__init__()
+        self.white_list = white_list
         self.commands = {}
         self.prefix = prefix
         # self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
@@ -29,7 +30,7 @@ class DiscordChecker(discord.Client):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        if str(message.author.id) in white_list:
+        if str(message.author.id) in self.white_list:
 
             text = message.content
 
@@ -67,17 +68,17 @@ if __name__ == '__main__':
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             token = data['token']
-            white_list = data['white_list']
+            white_list = data['white_list'].split('+')
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
     checker = Checker(db_manager.get_url_repository())
-    bot = DiscordChecker(prefix, checker)
+    bot = DiscordChecker(prefix, checker, white_list)
     bot.register_command(Delete(db_manager.get_url_repository(), prefix))
     bot.register_command(Add(db_manager.get_url_repository(), prefix))
     bot.register_command(Info(db_manager.get_url_repository(), prefix))
     bot.register_command(Start(db_manager.get_url_repository(), checker, prefix))
-    bot.register_command(Stop(db_manager.get_url_repository(), prefix))
+    bot.register_command(Stop(db_manager.get_url_repository(), checker, prefix))
     bot.register_command(Help(bot.get_tuple(), prefix))
     bot.run(token)
 

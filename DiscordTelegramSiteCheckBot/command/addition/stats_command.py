@@ -1,6 +1,6 @@
-from bot.DbManager import UrlsBdRepository
-from bot.command.enums.SiteState import SiteState
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from DiscordTelegramSiteCheckBot.command.enums.SiteState import SiteState
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 import requests
 
 

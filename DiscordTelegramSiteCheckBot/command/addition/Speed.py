@@ -1,5 +1,5 @@
 import speedtest
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 
 
 class SpeedCommand(Command):

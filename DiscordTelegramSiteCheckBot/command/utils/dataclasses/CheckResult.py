@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from bot.command.enums.SiteState import SiteState
+from DiscordTelegramSiteCheckBot.command.enums.SiteState import SiteState
 
 
 @dataclass

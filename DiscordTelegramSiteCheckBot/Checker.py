@@ -1,10 +1,10 @@
 import threading
 import time
 
-from bot.DbManager import UrlsBdRepository
-from bot.command.enums.SiteState import SiteState
-from bot.command.utils.EncodingTime import EncoderTime
-from bot.command.utils.MonitoringUtils import MonitoringUrl
+from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from DiscordTelegramSiteCheckBot.command.enums.SiteState import SiteState
+from DiscordTelegramSiteCheckBot.command.utils.EncodingTime import EncoderTime
+from DiscordTelegramSiteCheckBot.command.utils.MonitoringUtils import MonitoringUrl
 
 
 class Checker:

@@ -1,8 +1,8 @@
-from bot.DbManager import UrlsBdRepository
-from bot.command.base.Command import Command
-from bot.command.enums.SiteState import SiteState
-from bot.command.utils.EncodingTime import EncoderTime
-from bot.command.utils.MonitoringUtils import MonitoringUrl
+from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.command.enums.SiteState import SiteState
+from DiscordTelegramSiteCheckBot.command.utils.EncodingTime import EncoderTime
+from DiscordTelegramSiteCheckBot.command.utils.MonitoringUtils import MonitoringUrl
 
 
 class Info(Command):

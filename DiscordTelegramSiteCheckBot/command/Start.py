@@ -1,9 +1,12 @@
-from bot.Checker import Checker
-from bot.DbManager import UrlsBdRepository
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.Checker import Checker
+from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 
 
 class Start(Command):
+
+    DEFAULT_SLEEP_TIME = 600
+
     def __init__(self, url_repo: UrlsBdRepository, checker: Checker, prefix) -> None:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
@@ -12,8 +15,8 @@ class Start(Command):
 
     def execute(self, send_func, args: [str]):
         if len(args) == 0:
-            time_of_checking = 86400
-            send_func('``` You forgot give argument time now its 1 day ```')
+            send_func('``` You forgot give argument time now its 10 min ```')
+            time_of_checking = self.DEFAULT_SLEEP_TIME
         else:
             time_of_checking = args[0]
         self.url_repo.changing_state(True)

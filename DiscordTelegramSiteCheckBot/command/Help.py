@@ -2,7 +2,7 @@ import asyncio
 
 import discord
 
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 
 
 class Help(Command):

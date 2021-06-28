@@ -2,7 +2,7 @@ import io
 import matplotlib.pyplot as plt
 #from openpyxl.drawing.image import Image
 #import speedtest
-from bot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
 
 
 class GraphicsCommand(Command):

@@ -1,8 +1,8 @@
 import time
 
-from bot.DbManager import UrlsBdRepository
-from bot.command.base.Command import Command
-from bot.command.enums.SiteState import SiteState
+from DiscordTelegramSiteCheckBot.DbManager import UrlsBdRepository
+from DiscordTelegramSiteCheckBot.command.base.Command import Command
+from DiscordTelegramSiteCheckBot.command.enums.SiteState import SiteState
 
 
 class Add(Command):
