@@ -12,7 +12,6 @@ class Stop(Command):
 
     def execute(self, send_func, split_msg):
         self.url_repo.changing_state(False)
-        self.checker.stop()
         send_func('```Вы остановили процесс проверки!```')
 
     def get_name(self):
