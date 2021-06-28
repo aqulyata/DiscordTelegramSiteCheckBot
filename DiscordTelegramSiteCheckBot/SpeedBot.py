@@ -67,8 +67,7 @@ if __name__ == '__main__':
         with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
-            token = data['token']
-            del token[-2]
+            token = data['token'][:-1]
             white_list = data['white_list'].split('+')
     else:
         raise Exception("File is empty")
