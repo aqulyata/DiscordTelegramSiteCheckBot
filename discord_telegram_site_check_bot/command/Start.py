@@ -13,18 +13,22 @@ class Start(Command):
         self.checker: Checker = checker
         self.prefix = prefix
 
-    def execute(self, send_func, args: [str]):
+        def execute(self, send_func, args: [str]):
+        result = []
         if len(args) == 0:
-            send_func('``` You forgot give argument time now its 10 min ```')
+            result.append('You forgot give argument time now its 10 min')
             time_of_checking = self.DEFAULT_SLEEP_TIME
         else:
             time_of_checking = args[0]
         self.url_repo.changing_state(True)
         if self.checker.start(send_func, time_of_checking):
-            send_func('```Вы запустили процесс проверки!```')
+            result.append('Вы запустили процесс проверки!')
         else:
-            send_func('```Уже запущено!```')
-
+            result.append('Уже запущено!')
+        if len(result) != 0:
+            results = '\n'.join(result)
+            send_func(f'```{results}```')
+            
     def get_name(self):
         return 'start'
 
