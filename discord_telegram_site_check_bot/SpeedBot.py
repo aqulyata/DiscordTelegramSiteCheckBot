@@ -21,7 +21,7 @@ class DiscordChecker(discord.Client):
     async def on_message(self, message: discord.Message):
         if message.author == self.user:
             return
-        if str(message.author.id) in self.white_list:
+        if message.author.id in self.white_list:
 
             text = message.content
 
