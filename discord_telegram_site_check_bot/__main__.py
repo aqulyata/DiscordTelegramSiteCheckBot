@@ -19,7 +19,7 @@ if __name__ == '__main__':
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             token = data['token'][:-1]
-            white_list = data['white_list'].split('+')
+            white_list = data['white_list']
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
