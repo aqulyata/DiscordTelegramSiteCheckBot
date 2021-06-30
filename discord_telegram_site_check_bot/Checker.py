@@ -15,7 +15,7 @@ class Checker:
         self.encoder = EncoderTime()
         self.monitoring_urls = MonitoringUrl(url_repo)
 
-    def start(self, send_func, time_of_checking):
+    def start(self, send_func, time_of_checking:int):
 
         if self.t1 is not None and self.t1.is_alive():
             return False
@@ -27,7 +27,6 @@ class Checker:
             return False
 
     def check(self, send_func, time_of_checking):
-        results = []
         while self.url_repo.get_state():
             elements = self.monitoring_urls.check()
             for check in elements:
@@ -35,12 +34,8 @@ class Checker:
                     self.url_repo.update_status(check.url, check.new_status.value, int(check.data))
                     time_of = check.data - check.last_time
                     if check.new_status == SiteState.READY:
-                        results.append(f'🟢{check.url} {self.encoder.encod(time_of)}🟢')
+                        send_func(f'🟢{check.url} {self.encoder.encod(time_of)}🟢')
                     else:
-                        results.append(f'🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴')
+                        send_func(f'🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴')
 
-                if len(results) != 0:
-                    results = '\n'.join(results)
-                    send_func(f'```{results}```')
-
-            time.sleep(int(time_of_checking))
+            time.sleep(time_of_checking)
