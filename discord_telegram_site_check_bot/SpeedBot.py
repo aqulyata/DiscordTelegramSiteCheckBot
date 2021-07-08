@@ -7,13 +7,11 @@ from discord_telegram_site_check_bot.command.base.Command import Command
 
 
 class DiscordChecker(discord.Client):
-    def __init__(self, prefix: str, checker: Checker, white_list: [str]):
+    def __init__(self, prefix: str, white_list: [str]):
         super().__init__()
         self.white_list = white_list
         self.commands = {}
         self.prefix = prefix
-        # self.embed = discord.Embed(colour=discord.Colour.from_rgb(106, 192, 245))
-        self.checker = checker
 
     async def on_ready(self):
         print('Logged on as', self.user)

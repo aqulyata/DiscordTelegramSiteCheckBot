@@ -13,3 +13,7 @@ class CheckResult():
     status_code: int
     new_status: SiteState
     old_status: SiteState
+
+    chnl_id: int
+    chnl_name: str
+    category: int

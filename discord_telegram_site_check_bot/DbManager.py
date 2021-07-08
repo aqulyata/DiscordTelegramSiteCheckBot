@@ -11,7 +11,10 @@ class DbConnectionManager():
         self.sql.execute("""CREATE TABLE IF NOT EXISTS users (
             url TEXT,
             status INT,
-            data INT
+            data INT,
+            channel INT,
+            chnl_name TEXT,
+            category INT
         ) """)
         self.sql.execute("""CREATE TABLE IF NOT EXISTS states (
             state INT
@@ -26,20 +29,40 @@ class DbConnectionManager():
 class UrlsBdRepository:
     def __init__(self, connection) -> None:
         super().__init__()
-        self.db = connection
+        self.connection = connection
+        self.db = sqlite3.connect('url.db', check_same_thread=False)
         self.sql = self.db.cursor()
 
     def find_url(self, url):
         cursor = self.sql.execute(f"SELECT url FROM users WHERE  url = '{url}'")
         return cursor.fetchall()
 
-    def check_and_recording_url_in_db(self, url, status, data):
+    def update_category(self, category):
+        self.sql.execute(f"UPDATE users SET category = {category} ")
+        self.db.commit()
+
+    def update_channel_id(self, chnl_id, chnl_name):
+        self.sql.execute(f"UPDATE users SET channel = {chnl_id} WHERE chnl_name = '{chnl_name}'")
+        self.db.commit()
+
+    def check_and_recording_url_in_db(self, url, status, data, chnl_id, chnl_name, category):
         cursor = self.sql.execute(f"SELECT url FROM users WHERE  url = '{url}'")
         if cursor.fetchone() is None:
-            self.sql.execute(f"INSERT INTO users VALUES(?,?,?)", (url, status, data))
+            self.sql.execute(f"INSERT INTO users VALUES(?,?,?,?,?,?)",
+                             (url, status, data, chnl_id, chnl_name, category))
             self.db.commit()
             return True
         return False
+
+    def get_certain_record(self,number):
+        cursor = self.sql.execute(f"SELECT * FROM users")
+        all_urls = list(cursor.fetchall())
+        self.db.commit()
+        if len(all_urls) <= number:
+            return False
+        else:
+            concret_url = all_urls[number][3]
+            return concret_url
 
     def delete_element_in_db(self, number):
         cursor = self.sql.execute(f"SELECT url FROM users")

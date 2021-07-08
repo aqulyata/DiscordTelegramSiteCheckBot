@@ -23,9 +23,9 @@ if __name__ == '__main__':
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
-    checker = Checker(db_manager.get_url_repository())
-    bot = DiscordChecker(prefix, checker, white_list)
-    bot.register_command(Delete(db_manager.get_url_repository(), prefix))
+    bot = DiscordChecker(prefix, white_list)
+    checker = Checker(db_manager.get_url_repository(), bot)
+    bot.register_command(Delete(db_manager.get_url_repository(), prefix, bot))
     bot.register_command(Add(db_manager.get_url_repository(), prefix))
     bot.register_command(Info(db_manager.get_url_repository(), prefix))
     bot.register_command(Start(db_manager.get_url_repository(), checker, prefix))

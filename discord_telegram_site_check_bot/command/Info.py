@@ -24,7 +24,7 @@ class Info(Command):
                 time_of = check.data - check.last_time
                 results.append(f'🟢{check.url} {self.encoder.encod(time_of)}🟢')
 
-            if check.new_status == SiteState.NOT_READY:
+            elif check.new_status == SiteState.NOT_READY:
                 time_of = check.data - check.last_time
                 results.append(f'🔴{check.url} {self.encoder.encod(time_of)} ERROR = {check.status_code}🔴')
         if len(results) != 0:
