@@ -7,8 +7,7 @@ from discord_telegram_site_check_bot.command.enums.SiteState import SiteState
 class CheckResult():
     url: str
 
-    data: float
-    last_time: int
+    time_of: int
 
     status_code: int
     new_status: SiteState

@@ -5,16 +5,14 @@ import time
 from discord_telegram_site_check_bot.DbManager import UrlsBdRepository
 from discord_telegram_site_check_bot.command.enums.SiteState import SiteState
 from discord_telegram_site_check_bot.command.utils.EncodingTime import EncoderTime
-from discord_telegram_site_check_bot.command.utils.MonitoringUtils import MonitoringUrl
-
 
 class Checker:
+
     def __init__(self, url_repo: UrlsBdRepository, bot) -> None:
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.t1 = None
         self.encoder = EncoderTime()
-        self.monitoring_urls = MonitoringUrl(url_repo)
         self.bot = bot
 
     def start(self, time_of_checking):
@@ -36,7 +34,7 @@ class Checker:
             for channel in guild.channels:
                 print(channel)
                 channels.append(channel.id)
-            elements = self.monitoring_urls.check()
+            elements = self.bot.update()
             for check in elements:
                 if check.chnl_id not in channels:
                     # if check.category not in channels:

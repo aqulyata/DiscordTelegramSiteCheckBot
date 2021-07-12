@@ -11,6 +11,7 @@ from discord_telegram_site_check_bot.command.Help import Help
 from discord_telegram_site_check_bot.command.Info import Info
 from discord_telegram_site_check_bot.command.Start import Start
 from discord_telegram_site_check_bot.command.Stop import Stop
+from discord_telegram_site_check_bot.publisher import Publisher
 
 if __name__ == '__main__':
 
