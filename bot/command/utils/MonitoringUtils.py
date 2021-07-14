@@ -8,6 +8,7 @@ from bot.Publisher import Publisher
 from bot.Publisher import Observer
 from typing import List
 
+
 class MonitoringUrl(Publisher):
 
     def __init__(self, url_repo: UrlsBdRepository) -> None:

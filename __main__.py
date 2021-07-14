@@ -1,6 +1,5 @@
 import os
 import yaml
-from telebot import AsyncTeleBot
 from telebot.types import Message
 from bot.Checker import Checker
 from bot.DbManager import DbConnectionManager
@@ -10,8 +9,6 @@ from bot.command.Help import Help
 from bot.command.Info import Info
 from bot.command.Start import Start
 from bot.command.Stop import Stop
-from bot.command.base.Command import Command
-from Observer import Observer
 from bot.SpeedBot import TelegramBot
 
 if __name__ == '__main__':
@@ -53,5 +50,6 @@ def on_message(message: Message):
         else:
             args = []
         bot.commands[cmd].execute(lambda msg: bot.send_message(message.chat.id, msg), args)
+
 
 bot.polling(none_stop=True, interval=0, timeout=0)
