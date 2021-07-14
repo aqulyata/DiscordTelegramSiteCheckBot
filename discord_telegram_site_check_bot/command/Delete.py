@@ -26,8 +26,8 @@ class Delete(Command):
         if len(args) == 1:
             number_1 = int(args[0])
             number = number_1 - 1
-            channel = self.bot.get_channel(self.url_repo.get_certain_record(number))
-            await channel.delete()
+            # channel = self.bot.get_channel(self.url_repo.get_certain_record(number))
+            # await channel.delete()
             if self.url_repo.delete_element_in_db(number):
                 send_func('```Удалено!```')
             else:

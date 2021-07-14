@@ -14,7 +14,6 @@ from discord_telegram_site_check_bot.command.Stop import Stop
 from discord_telegram_site_check_bot.publisher import Publisher
 
 if __name__ == '__main__':
-
     if os.stat("config.yaml").st_size != 0:
         with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
@@ -25,7 +24,8 @@ if __name__ == '__main__':
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
     bot = DiscordChecker(prefix, white_list)
-    checker = Checker(db_manager.get_url_repository(), bot)
+    checker = Checker(db_manager.get_url_repository())
+    checker.attach(bot)
     bot.register_command(Delete(db_manager.get_url_repository(), prefix, bot))
     bot.register_command(Add(db_manager.get_url_repository(), prefix))
     bot.register_command(Info(db_manager.get_url_repository(), prefix))

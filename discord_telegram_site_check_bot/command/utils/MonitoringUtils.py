@@ -28,8 +28,7 @@ class MonitoringUrl(Publisher):
     def notify(self, check_res) -> None:
         print("Subject: Notifying observers...")
         for observer in self._observers:
-            observer.update()
-            return check_res
+            observer.update(check_res)
 
     def check(self):
         for resource in self.url_repo.all_info():
