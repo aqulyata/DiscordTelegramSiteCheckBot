@@ -61,17 +61,19 @@ class Checker(Publisher):
                 if new_status.value != old_status:
                     self.url_repo.update_status(url, new_status.value, int(data))
                     if new_status == SiteState.READY:
-                        time_of = data - last_time
+                        date = data - last_time
+                        time_of = self.encoder.encod(date)
                         check_res = CheckResult(url, time_of, status_code, new_status, old_status, chnl_id, chnl_name,
                                                 category)
                         self.notify(check_res)
                     elif new_status == SiteState.NOT_READY:
-                        time_of = data - last_time
+                        date = data - last_time
+                        time_of = self.encoder.encod(date)
                         check_res = CheckResult(url, time_of, status_code, new_status, old_status, chnl_id, chnl_name,
                                                 category)
                         self.notify(check_res)
 
-        time.sleep(time_of_checking)
+        time.sleep(int(time_of_checking))
 
     def fast_check(self):
         results = []
@@ -95,6 +97,6 @@ class Checker(Publisher):
                 time_of = data - last_time
                 emoji = '🟠' if status_code == -1 else '🔴'
                 results.append(f'{emoji}{url} {self.encoder.encod(time_of)} ERROR = {status_code}{emoji}')
-            if len(results) != 0:
-                results = '\n'.join(results)
-                return results
+        if len(results) != 0:
+            results = '\n'.join(results)
+            return results

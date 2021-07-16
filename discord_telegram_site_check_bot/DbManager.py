@@ -54,7 +54,7 @@ class UrlsBdRepository:
             return True
         return False
 
-    def get_certain_record(self,number):
+    def get_certain_record(self, number):
         cursor = self.sql.execute(f"SELECT * FROM users")
         all_urls = list(cursor.fetchall())
         self.db.commit()
