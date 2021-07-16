@@ -4,4 +4,4 @@ services:
     image: site_checker
     container_name: dev_site_checker
     volumes:
-    - /home/actions-runner/site_checker:/discord_telegram_site_check_bot
+    - /home/actions-runner/site_checker:/discord_site_check_bot

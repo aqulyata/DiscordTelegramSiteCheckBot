@@ -1,5 +1,5 @@
 import speedtest
-from discord_telegram_site_check_bot.command.base.Command import Command
+from discord_site_check_bot.command.base.Command import Command
 
 
 class SpeedCommand(Command):

@@ -2,16 +2,16 @@ import os
 
 import yaml
 
-from discord_telegram_site_check_bot.Checker import Checker
-from discord_telegram_site_check_bot.DbManager import DbConnectionManager
-from discord_telegram_site_check_bot.SpeedBot import DiscordChecker
-from discord_telegram_site_check_bot.command.Add import Add
-from discord_telegram_site_check_bot.command.Delete import Delete
-from discord_telegram_site_check_bot.command.Help import Help
-from discord_telegram_site_check_bot.command.Info import Info
-from discord_telegram_site_check_bot.command.Start import Start
-from discord_telegram_site_check_bot.command.Stop import Stop
-from discord_telegram_site_check_bot.publisher import Publisher
+from discord_site_check_bot.Checker import Checker
+from discord_site_check_bot.DbManager import DbConnectionManager
+from discord_site_check_bot.SpeedBot import DiscordChecker
+from discord_site_check_bot.command.Add import Add
+from discord_site_check_bot.command.Delete import Delete
+from discord_site_check_bot.command.Help import Help
+from discord_site_check_bot.command.Info import Info
+from discord_site_check_bot.command.Start import Start
+from discord_site_check_bot.command.Stop import Stop
+from discord_site_check_bot.publisher import Publisher
 
 if __name__ == '__main__':
     if os.stat("config.yaml").st_size != 0:

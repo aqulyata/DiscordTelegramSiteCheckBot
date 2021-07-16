@@ -1,8 +1,8 @@
 import asyncio
 import threading
 
-from discord_telegram_site_check_bot.command.base.Command import Command
-from discord_telegram_site_check_bot.DbManager import UrlsBdRepository
+from discord_site_check_bot.DbManager import UrlsBdRepository
+from discord_site_check_bot.command.base.Command import Command
 
 
 class Delete(Command):
@@ -23,6 +23,7 @@ class Delete(Command):
         self.t2.start()
 
     async def delete(self, send_func, args):
+        result = []
         if len(args) == 1:
             number_1 = int(args[0])
             number = number_1 - 1
@@ -33,8 +34,11 @@ class Delete(Command):
             else:
                 send_func('```Такого элемента нет```')
         else:
-
-            send_func(f'```{self.url_repo.all_urls()}```')
+            for element in self.url_repo.all_urls():
+                result.append(str(element))
+            if len(result) != 0:
+                result = '\n'.join(result)
+                send_func(f'```{result}```')
 
     def get_name(self):
         return 'delete'

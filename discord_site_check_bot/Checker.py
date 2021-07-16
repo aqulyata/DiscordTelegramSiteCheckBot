@@ -5,11 +5,11 @@ from typing import List
 import requests
 
 from Observer import Observer
-from discord_telegram_site_check_bot.DbManager import UrlsBdRepository
-from discord_telegram_site_check_bot.command.enums.SiteState import SiteState
-from discord_telegram_site_check_bot.command.utils.EncodingTime import EncoderTime
-from discord_telegram_site_check_bot.command.utils.dataclasses.CheckResult import CheckResult
-from discord_telegram_site_check_bot.publisher import Publisher
+from discord_site_check_bot.DbManager import UrlsBdRepository
+from discord_site_check_bot.command.enums.SiteState import SiteState
+from discord_site_check_bot.command.utils.EncodingTime import EncoderTime
+from discord_site_check_bot.command.utils.dataclasses.CheckResult import CheckResult
+from discord_site_check_bot.publisher import Publisher
 
 
 class Checker(Publisher):

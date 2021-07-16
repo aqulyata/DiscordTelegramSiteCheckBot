@@ -4,8 +4,8 @@ import threading
 import discord
 
 from Observer import Observer
-from discord_telegram_site_check_bot.DbManager import UrlsBdRepository
-from discord_telegram_site_check_bot.command.base.Command import Command
+from discord_site_check_bot.DbManager import UrlsBdRepository
+from discord_site_check_bot.command.base.Command import Command
 
 
 class DiscordChecker(discord.Client, Observer):
@@ -15,6 +15,8 @@ class DiscordChecker(discord.Client, Observer):
         self.white_list = white_list
         self.commands = {}
         self.prefix = prefix
+        self.guid = None
+        self.t2 = None
 
     async def on_ready(self):
         print('Logged on as', self.user)
@@ -25,7 +27,7 @@ class DiscordChecker(discord.Client, Observer):
         if message.author.id in self.white_list:
 
             text = message.content
-
+            self.guild = message.guild
             if not text.startswith(self.prefix):
                 return
             text = text[len(self.prefix):]
@@ -47,21 +49,22 @@ class DiscordChecker(discord.Client, Observer):
                 self.commands[cmd].execute(test, args)
 
     def update(self, check_res):
+        if self.t2 is not None and self.t2.is_alive():
+            return
         loop = asyncio.get_running_loop()
-        self.t1 = threading.Thread(target=lambda: loop.create_task(self.checking(check_res)), args=())
-        self.t1.start()
+        self.t2 = threading.Thread(target=lambda: loop.create_task(self.checking(check_res)), args=())
+        self.t2.start()
         print(check_res)
 
     async def checking(self, check_res):
         category = self.get_channel(859892547534585888)
         channels = []
-        guild = self.get_guild(804421990508134430)
-        for channel in guild.channels:
+        for channel in self.guild.channels:
             print(channel)
             channels.append(channel.id)
         for check in check_res:
             if check.chnl_id not in channels:
-                chnl = await guild.create_text_channel(check.chnl_name, category=category)
+                chnl = await self.guild.create_text_channel(check.chnl_name, category=category)
                 self.url_repo.update_channel_id(chnl.id, check.chnl_name)
             else:
                 chanel = self.get_channel(check.chnl_id)
