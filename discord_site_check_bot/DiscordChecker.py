@@ -51,10 +51,10 @@ class DiscordChecker(discord.Client, Observer):
     def update(self, check_res, loop):
         if self.t2 is not None and self.t2.is_alive():
             return
-        loop.create_task(self.checking(check_res))
+        loop.create_task(self.change_send_channels(check_res))
         print(check_res)
 
-    async def checking(self, check_res):
+    async def change_send_channels(self, check_res):
         category = self.get_channel(859892547534585888)
         channels = []
         result = []

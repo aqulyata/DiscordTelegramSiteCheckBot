@@ -4,7 +4,7 @@ import yaml
 
 from discord_site_check_bot.Checker import Checker
 from discord_site_check_bot.DbManager import DbConnectionManager
-from discord_site_check_bot.SpeedBot import DiscordChecker
+from discord_site_check_bot.DiscordChecker import DiscordChecker
 from discord_site_check_bot.command.Add import Add
 from discord_site_check_bot.command.Delete import Delete
 from discord_site_check_bot.command.Help import Help
