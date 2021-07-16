@@ -48,32 +48,34 @@ class DiscordChecker(discord.Client, Observer):
             if self.commands[cmd].execute is not None:
                 self.commands[cmd].execute(test, args)
 
-    def update(self, check_res):
+    def update(self, check_res, loop):
         if self.t2 is not None and self.t2.is_alive():
             return
-        loop = asyncio.get_running_loop()
-        self.t2 = threading.Thread(target=lambda: loop.create_task(self.checking(check_res)), args=())
-        self.t2.start()
+        loop.create_task(self.checking(check_res))
         print(check_res)
 
     async def checking(self, check_res):
         category = self.get_channel(859892547534585888)
         channels = []
+        result = []
         for channel in self.guild.channels:
             print(channel)
             channels.append(channel.id)
-        for check in check_res:
+        result.append(check_res)
+        for check in result:
             if check.chnl_id not in channels:
                 chnl = await self.guild.create_text_channel(check.chnl_name, category=category)
+                chanel = self.get_channel(chnl.id)
                 self.url_repo.update_channel_id(chnl.id, check.chnl_name)
             else:
                 chanel = self.get_channel(check.chnl_id)
-                new_name = ('🟢' + check.chnl_name.upper() + '🟢') if check.status_code == 200 else (
-                        '🔴' + check.chnl_name.upper() + '🔴')
-                await chanel.edit(name=new_name)
-                await chanel.send(f'```🟢{check.url} {check.time_of}🟢```') if check.status_code == 200 else (
-                    f'```🔴{check.url} {check.time_of} ERROR = {check.status_code}🔴```')
-                print(f'```🟢{check.url} {check.time_of}🟢```')
+
+            new_name = ('🟢' + check.chnl_name.upper() + '🟢') if check.status_code == 200 else (
+                    '🔴' + check.chnl_name.upper() + '🔴')
+            await chanel.edit(name=new_name)
+            await chanel.send(f'```🟢{check.url} {check.time_of}🟢```') if check.status_code == 200 else (
+                f'```🔴{check.url} {check.time_of} ERROR = {check.status_code}🔴```')
+            print(f'```🟢{check.url} {check.time_of}🟢```')
 
     def get_tuple(self):
         return self.commands

@@ -1,3 +1,4 @@
+import asyncio
 import threading
 import time
 from typing import List
@@ -19,6 +20,7 @@ class Checker(Publisher):
         self.url_repo: UrlsBdRepository = url_repo
         self.t1 = None
         self.encoder = EncoderTime()
+        self.loop = None
 
     _observers: List[Observer] = []
 
@@ -32,11 +34,12 @@ class Checker(Publisher):
     def notify(self, check_res) -> None:
         print("Subject: Notifying observers...")
         for observer in self._observers:
-            observer.update(check_res)
+            observer.update(check_res, self.loop)
 
     def start(self, time_of_checking):
         if self.t1 is not None and self.t1.is_alive():
             return False
+        self.loop = asyncio.get_event_loop()
         self.t1 = threading.Thread(target=lambda: (self.check(time_of_checking)), args=())
         self.t1.start()
         return True
