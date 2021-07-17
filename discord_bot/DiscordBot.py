@@ -3,14 +3,14 @@ import asyncio
 import discord
 
 from Observer import Observer
-from discord_bot.DbManager import UrlsBdRepository
-from discord_bot.command.Add import Add
-from discord_bot.command.Delete import Delete
-from discord_bot.command.Help import Help
-from discord_bot.command.Info import Info
-from discord_bot.command.Start import Start
-from discord_bot.command.Stop import Stop
-from discord_bot.command.base.Command import Command
+from DbManager import UrlsBdRepository
+from command import Add
+from command.Delete import Delete
+from command.Help import Help
+from command.Info import Info
+from command.Start import Start
+from command import Stop
+from command.base.Command import Command
 
 
 class DiscordBot(discord.Client, Observer):

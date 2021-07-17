@@ -1,5 +1,5 @@
 import speedtest
-from discord_bot.command.base.Command import Command
+from command.base.Command import Command
 
 
 class SpeedCommand(Command):

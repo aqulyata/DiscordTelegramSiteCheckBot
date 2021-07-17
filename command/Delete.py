@@ -1,8 +1,8 @@
 import asyncio
 import threading
 
-from discord_bot.DbManager import UrlsBdRepository
-from discord_bot.command.base.Command import Command
+from DbManager import UrlsBdRepository
+from command.base.Command import Command
 
 
 class Delete(Command):

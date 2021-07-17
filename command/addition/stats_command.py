@@ -1,6 +1,6 @@
-from discord_bot.DbManager import UrlsBdRepository
-from discord_bot.command.enums.SiteState import SiteState
-from discord_bot.command.base.Command import Command
+from DbManager import UrlsBdRepository
+from command.enums.SiteState import SiteState
+from command.base.Command import Command
 import requests
 
 

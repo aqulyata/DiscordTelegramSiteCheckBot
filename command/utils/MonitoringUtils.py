@@ -3,9 +3,9 @@ from typing import List
 
 import requests
 
-from discord_bot.DbManager import UrlsBdRepository
-from discord_bot.command.enums.SiteState import SiteState
-from discord_bot.command.utils.dataclasses.CheckResult import CheckResult
+from DbManager import UrlsBdRepository
+from command.enums.SiteState import SiteState
+from command.utils.dataclasses.CheckResult import CheckResult
 from Publisher import Observer
 from Publisher import Publisher
 
