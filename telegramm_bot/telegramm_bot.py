@@ -9,7 +9,7 @@ from command.Info import Info
 from command.Start import Start
 from command.Stop import Stop
 from command.base.Command import Command
-from telebot.types import Message
+
 
 
 class TelegramBot(AsyncTeleBot, Observer):
@@ -33,3 +33,5 @@ class TelegramBot(AsyncTeleBot, Observer):
 
     def update(self, check_res, loop = None):
         print(check_res)
+
+
