@@ -1,6 +1,7 @@
 token: "ODExNTY2ODQ1ODA2Mzc5MDE4.YC0Ehg.YJbFbSEVydsQRsq56Cm3kC9aDlc-"
 bot: 'Sitetatus'
 prefix: '/v'
-white_list: [414825980381757440,649339138964717647]
+discord_white_list: [414825980381757440,649339138964717647]
+telegramm_white_list: [689164015]
 black_list: '3123123912'
 tg_token: 1741041012:AAENee5ykrUW6N_-skjJ2jHN1uwwRZAtiqg

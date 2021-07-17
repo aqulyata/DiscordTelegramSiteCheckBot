@@ -14,22 +14,23 @@ if __name__ == '__main__':
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             dis_token = data['token'][:-1]
-            white_list = data['white_list']
+            discord_white_list = data['discord_white_list']
+            telegramm_bot_white_list = data['telegramm_white_list']
             tg_token = data['tg_token']
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
     url_repo = db_manager.get_url_repository()
     checker = Checker(url_repo)
-    telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix, white_list)
-    dis_bot = DiscordBot(prefix, white_list, db_manager.get_url_repository(), checker)
+    telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix, telegramm_bot_white_list)
+    dis_bot = DiscordBot(prefix, discord_white_list, db_manager.get_url_repository(), checker)
     checker.attach(dis_bot)
     checker.attach(telegram_bot)
 
 
     @telegram_bot.message_handler(func=lambda m: True)
     def on_message(message: Message):
-        if str(message.chat.id) in white_list:
+        if message.chat.id in telegramm_bot_white_list:
             text = message.text
             if not text.startswith(prefix):
                 return

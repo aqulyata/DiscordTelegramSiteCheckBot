@@ -11,10 +11,9 @@ from command.Stop import Stop
 from command.base.Command import Command
 
 
-
 class TelegramBot(AsyncTeleBot, Observer):
 
-    def __init__(self, checker, token: str, url_repo: UrlsBdRepository,prefix, white_list):
+    def __init__(self, checker, token: str, url_repo: UrlsBdRepository, prefix, white_list):
         super().__init__(token=token)
         self.commands = {}
         self.checker = checker
@@ -31,7 +30,5 @@ class TelegramBot(AsyncTeleBot, Observer):
     def register_command(self, command: Command):
         self.commands[command.get_name()] = command
 
-    def update(self, check_res, loop = None):
+    def update(self, check_res, loop=None):
         print(check_res)
-
-
