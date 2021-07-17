@@ -1,8 +1,8 @@
 import time
 
-from discord_site_check_bot.DbManager import UrlsBdRepository
-from discord_site_check_bot.command.base.Command import Command
-from discord_site_check_bot.command.enums.SiteState import SiteState
+from discord_bot.DbManager import UrlsBdRepository
+from discord_bot.command.base.Command import Command
+from discord_bot.command.enums.SiteState import SiteState
 
 
 class Add(Command):

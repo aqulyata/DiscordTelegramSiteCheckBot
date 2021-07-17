@@ -3,19 +3,18 @@ import asyncio
 import discord
 
 from Observer import Observer
-from discord_site_check_bot.Checker import Checker
-from discord_site_check_bot.DbManager import UrlsBdRepository
-from discord_site_check_bot.command.Add import Add
-from discord_site_check_bot.command.Delete import Delete
-from discord_site_check_bot.command.Help import Help
-from discord_site_check_bot.command.Info import Info
-from discord_site_check_bot.command.Start import Start
-from discord_site_check_bot.command.Stop import Stop
-from discord_site_check_bot.command.base.Command import Command
+from discord_bot.DbManager import UrlsBdRepository
+from discord_bot.command.Add import Add
+from discord_bot.command.Delete import Delete
+from discord_bot.command.Help import Help
+from discord_bot.command.Info import Info
+from discord_bot.command.Start import Start
+from discord_bot.command.Stop import Stop
+from discord_bot.command.base.Command import Command
 
 
-class DiscordChecker(discord.Client, Observer):
-    def __init__(self, prefix: str, white_list: [str], url_repo: UrlsBdRepository):
+class DiscordBot(discord.Client, Observer):
+    def __init__(self, prefix: str, white_list: [str], url_repo: UrlsBdRepository, checker):
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
         self.white_list = white_list
@@ -23,7 +22,7 @@ class DiscordChecker(discord.Client, Observer):
         self.prefix = prefix
         self.guid = None
         self.t2 = None
-        self.checker = Checker(url_repo)
+        self.checker = checker
         self.register_command(Info(url_repo, prefix))
         self.register_command(Delete(url_repo, prefix, self))
         self.register_command(Add(url_repo, prefix))
@@ -65,16 +64,23 @@ class DiscordChecker(discord.Client, Observer):
         if self.t2 is not None and self.t2.is_alive():
             return
         loop.create_task(self.change_send_channels(check_res))
-        print(check_res)
 
     async def change_send_channels(self, check_res):
-        category = self.get_channel(859892547534585888)
+        name_of_category = "HandWriter"
         channels = []
         result = []
-        for channel in self.guild.channels:
-            print(channel)
-            channels.append(channel.id)
+        channels_name = []
         result.append(check_res)
+        for channel in self.guild.channels:
+            channels.append(channel.id)
+            channels_name.append(channel.name)
+        print(channels_name)
+        if name_of_category not in channels_name:
+
+            category = await self.guild.create_category(name_of_category)
+        else:
+            category_obj = discord.utils.get(self.guild.channels, name=name_of_category)
+            category = self.get_channel(category_obj.id)
         for check in result:
             if check.chnl_id not in channels:
                 chnl = await self.guild.create_text_channel(check.chnl_name, category=category)
@@ -95,3 +101,4 @@ class DiscordChecker(discord.Client, Observer):
 
     def register_command(self, command: Command):
         self.commands[command.get_name()] = command
+

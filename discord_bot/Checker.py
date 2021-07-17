@@ -6,11 +6,11 @@ from typing import List
 import requests
 
 from Observer import Observer
-from discord_site_check_bot.DbManager import UrlsBdRepository
-from discord_site_check_bot.command.enums.SiteState import SiteState
-from discord_site_check_bot.command.utils.EncodingTime import EncoderTime
-from discord_site_check_bot.command.utils.dataclasses.CheckResult import CheckResult
-from discord_site_check_bot.publisher import Publisher
+from discord_bot.DbManager import UrlsBdRepository
+from discord_bot.command.enums.SiteState import SiteState
+from discord_bot.command.utils.EncodingTime import EncoderTime
+from discord_bot.command.utils.dataclasses.CheckResult import CheckResult
+from discord_bot.publisher import Publisher
 
 
 class Checker(Publisher):
@@ -21,6 +21,7 @@ class Checker(Publisher):
         self.t1 = None
         self.encoder = EncoderTime()
         self.loop = None
+
 
     _observers: List[Observer] = []
 

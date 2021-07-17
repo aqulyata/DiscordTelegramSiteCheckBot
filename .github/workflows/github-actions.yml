@@ -1,4 +1,4 @@
-name: Deploy discord discord_site_check_bot
+name: Deploy discord_bot discord_bot
 on: [push]
 jobs:
   Explore-GitHub-Actions:

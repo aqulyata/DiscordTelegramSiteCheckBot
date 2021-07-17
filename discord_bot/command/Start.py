@@ -1,6 +1,6 @@
-from discord_site_check_bot.Checker import Checker
-from discord_site_check_bot.DbManager import UrlsBdRepository
-from discord_site_check_bot.command.base.Command import Command
+from discord_bot.Checker import Checker
+from discord_bot.DbManager import UrlsBdRepository
+from discord_bot.command.base.Command import Command
 
 
 class Start(Command):
