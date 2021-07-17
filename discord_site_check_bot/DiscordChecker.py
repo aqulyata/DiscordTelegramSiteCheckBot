@@ -1,10 +1,16 @@
 import asyncio
-import threading
 
 import discord
 
 from Observer import Observer
+from discord_site_check_bot.Checker import Checker
 from discord_site_check_bot.DbManager import UrlsBdRepository
+from discord_site_check_bot.command.Add import Add
+from discord_site_check_bot.command.Delete import Delete
+from discord_site_check_bot.command.Help import Help
+from discord_site_check_bot.command.Info import Info
+from discord_site_check_bot.command.Start import Start
+from discord_site_check_bot.command.Stop import Stop
 from discord_site_check_bot.command.base.Command import Command
 
 
@@ -17,6 +23,13 @@ class DiscordChecker(discord.Client, Observer):
         self.prefix = prefix
         self.guid = None
         self.t2 = None
+        self.checker = Checker(url_repo)
+        self.register_command(Info(url_repo, prefix))
+        self.register_command(Delete(url_repo, prefix, self))
+        self.register_command(Add(url_repo, prefix))
+        self.register_command(Start(url_repo, self.checker, prefix))
+        self.register_command(Stop(url_repo, self.checker, prefix))
+        self.register_command(Help(url_repo, prefix))
 
     async def on_ready(self):
         print('Logged on as', self.user)
