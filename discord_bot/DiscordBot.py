@@ -4,12 +4,12 @@ import discord
 
 from Observer import Observer
 from DbManager import UrlsBdRepository
-from command import Add
+from command.Add import Add
 from command.Delete import Delete
 from command.Help import Help
 from command.Info import Info
 from command.Start import Start
-from command import Stop
+from command.Stop import Stop
 from command.base.Command import Command
 
 

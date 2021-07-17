@@ -20,7 +20,7 @@ if __name__ == '__main__':
     db_manager = DbConnectionManager()
     url_repo = db_manager.get_url_repository()
     checker = Checker(url_repo)
-    telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix)
+    telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix,white_list)
     dis_bot = DiscordBot(prefix, white_list, db_manager.get_url_repository(), checker)
     checker.attach(dis_bot)
     dis_bot.run(dis_token)

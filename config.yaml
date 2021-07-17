@@ -3,3 +3,4 @@ bot: 'Sitetatus'
 prefix: '$'
 white_list: [414825980381757440,649339138964717647]
 black_list: '3123123912'
+tg_token:
