@@ -6,8 +6,8 @@ import requests
 from discord_bot.DbManager import UrlsBdRepository
 from discord_bot.command.enums.SiteState import SiteState
 from discord_bot.command.utils.dataclasses.CheckResult import CheckResult
-from discord_bot.publisher import Observer
-from discord_bot.publisher import Publisher
+from Publisher import Observer
+from Publisher import Publisher
 
 
 class MonitoringUrl(Publisher):
