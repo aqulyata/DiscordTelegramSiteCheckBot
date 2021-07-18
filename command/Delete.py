@@ -16,13 +16,6 @@ class Delete(Command):
         self.bot = bot
 
     def execute(self, send_func, args: [str]):
-        if self.t2 is not None and self.t2.is_alive():
-            return
-        loop = asyncio.get_running_loop()
-        self.t2 = threading.Thread(target=lambda: loop.create_task(self.delete(send_func, args)), args=())
-        self.t2.start()
-
-    async def delete(self, send_func, args):
         result = []
         if len(args) == 1:
             number_1 = int(args[0])

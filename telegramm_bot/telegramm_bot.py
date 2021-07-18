@@ -30,5 +30,5 @@ class TelegramBot(AsyncTeleBot, Observer):
     def register_command(self, command: Command):
         self.commands[command.get_name()] = command
 
-    def update(self, check_res, loop=None):
+    def update(self, check_res, loop):
         print(check_res)

@@ -5,9 +5,9 @@ from typing import List
 
 import requests
 
+from DbManager import UrlsBdRepository
 from Observer import Observer
 from Publisher import Publisher
-from DbManager import UrlsBdRepository
 from command.enums.SiteState import SiteState
 from command.utils.EncodingTime import EncoderTime
 from command.utils.dataclasses.CheckResult import CheckResult
@@ -39,8 +39,12 @@ class Checker(Publisher):
     def start(self, time_of_checking):
         if self.t1 is not None and self.t1.is_alive():
             return False
-        self.loop = asyncio.get_event_loop()
-        self.t1 = threading.Thread(target=lambda: (self.check(time_of_checking)), args=())
+        try:
+            self.loop = asyncio.get_event_loop()
+        except Exception:
+            self.loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self.loop)
+        self.t1 = threading.Thread(target=lambda: self.check(time_of_checking), args=())
         self.t1.start()
         return True
 
