@@ -1,5 +1,6 @@
 import asyncio
 import os
+import threading
 
 import yaml
 from telebot.types import Message
@@ -49,8 +50,10 @@ if __name__ == '__main__':
 
 
     loop = asyncio.get_event_loop()
+    t2 = threading.Thread(target=lambda: dis_bot.run(dis_token) , args=())
+    t2.start()
     t1 = loop.create_task(telegram_bot.polling(none_stop=True, interval=0, timeout=0))
-    t2 = loop.create_task(dis_bot.run(dis_token))
+    # t2 = loop.create_task(dis_bot.run(dis_token))
     gathered = asyncio.gather(t1, t2, loop=loop)
     loop.run_until_complete(gathered)
 
