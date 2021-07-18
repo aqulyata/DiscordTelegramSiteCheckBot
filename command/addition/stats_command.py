@@ -1,4 +1,4 @@
-from DbManager import UrlsBdRepository
+from service.DbManager import UrlsBdRepository
 from command.enums.SiteState import SiteState
 from command.base.Command import Command
 import requests

@@ -2,8 +2,8 @@ import asyncio
 
 import discord
 
-from Observer import Observer
-from DbManager import UrlsBdRepository
+from service.Observer import Observer
+from service.DbManager import UrlsBdRepository
 from command.Add import Add
 from command.Delete import Delete
 from command.Help import Help

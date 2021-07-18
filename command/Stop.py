@@ -1,5 +1,5 @@
-from Checker import Checker
-from DbManager import UrlsBdRepository
+from service.Checker import Checker
+from service.DbManager import UrlsBdRepository
 from command.base.Command import Command
 
 

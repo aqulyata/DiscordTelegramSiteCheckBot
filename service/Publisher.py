@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from Observer import Observer
+from service.Observer import Observer
 
 
 class Publisher(ABC):

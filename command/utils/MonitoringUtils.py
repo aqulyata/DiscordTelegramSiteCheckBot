@@ -3,11 +3,11 @@ from typing import List
 
 import requests
 
-from DbManager import UrlsBdRepository
+from service.DbManager import UrlsBdRepository
 from command.enums.SiteState import SiteState
 from command.utils.dataclasses.CheckResult import CheckResult
-from Publisher import Observer
-from Publisher import Publisher
+from service.Publisher import Observer
+from service.Publisher import Publisher
 
 
 class MonitoringUrl(Publisher):

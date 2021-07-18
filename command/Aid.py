@@ -3,12 +3,16 @@ from command.base.Command import Command
 
 class Aid(Command):
 
-    def __init__(self, prefix) -> None:
+    def __init__(self, prefix, commands) -> None:
         super().__init__()
         self.prefix = prefix
+        self.commands = commands
 
     def execute(self, send_func, args: [str]):
-        send_func()
+        result = []
+        self.commands.get_help()
+        send_func(result)
+
 
     def get_help(self):
         return ("Show all commands\n" +

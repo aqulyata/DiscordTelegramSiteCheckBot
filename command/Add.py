@@ -1,6 +1,6 @@
 import time
 
-from DbManager import UrlsBdRepository
+from service.DbManager import UrlsBdRepository
 from command.base.Command import Command
 from command.enums.SiteState import SiteState
 

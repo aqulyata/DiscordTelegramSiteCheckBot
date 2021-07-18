@@ -1,8 +1,9 @@
 from telebot import AsyncTeleBot
 
-from DbManager import UrlsBdRepository
-from Observer import Observer
+from service.DbManager import UrlsBdRepository
+from service.Observer import Observer
 from command.Add import Add
+from command.Aid import Aid
 from command.Delete import Delete
 from command.Help import Help
 from command.Info import Info
@@ -26,9 +27,13 @@ class TelegramBot(AsyncTeleBot, Observer):
         self.register_command(Start(url_repo, self.checker, prefix))
         self.register_command(Stop(url_repo, self.checker, prefix))
         self.register_command(Help(url_repo, prefix))
+        self.register_command(Aid(self.prefix, self.get_tuple()))
 
     def register_command(self, command: Command):
         self.commands[command.get_name()] = command
 
     def update(self, check_res, loop):
         print(check_res)
+
+    def get_tuple(self):
+        return self.commands

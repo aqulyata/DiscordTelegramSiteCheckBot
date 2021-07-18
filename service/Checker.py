@@ -5,9 +5,9 @@ from typing import List
 
 import requests
 
-from DbManager import UrlsBdRepository
-from Observer import Observer
-from Publisher import Publisher
+from service.DbManager import UrlsBdRepository
+from service.Observer import Observer
+from service.Publisher import Publisher
 from command.enums.SiteState import SiteState
 from command.utils.EncodingTime import EncoderTime
 from command.utils.dataclasses.CheckResult import CheckResult

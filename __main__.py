@@ -5,8 +5,8 @@ import threading
 import yaml
 from telebot.types import Message
 
-from Checker import Checker
-from DbManager import DbConnectionManager
+from service.Checker import Checker
+from service.DbManager import DbConnectionManager
 from discord_bot.DiscordBot import DiscordBot
 from telegramm_bot.telegramm_bot import TelegramBot
 
