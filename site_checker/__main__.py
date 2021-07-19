@@ -11,8 +11,8 @@ from discord_bot.DiscordBot import DiscordBot
 from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
-    if os.stat("config.yaml").st_size != 0:
-        with open('config.yaml') as f:
+    if os.stat("../config.yaml").st_size != 0:
+        with open('../config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             dis_token = data['token'][:-1]
@@ -53,8 +53,6 @@ if __name__ == '__main__':
     t2 = threading.Thread(target=lambda: dis_bot.run(dis_token) , args=())
     t2.start()
     t1 = loop.create_task(telegram_bot.polling(none_stop=True, interval=0, timeout=0))
-    # t2 = loop.create_task(dis_bot.run(dis_token))
     gathered = asyncio.gather(t1, t2, loop=loop)
     loop.run_until_complete(gathered)
 
-    # loop.run_forever()
