@@ -7,3 +7,6 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker build -t site_checker .
       - run: docker-compose run -e TELEGRAM_TOKEN= ${{ secrets.TG_TOKEN }} DISCORD_TOKEN= ${{ secrets.DIS_TOKEN }} site_checker  shell -d
+      env:
+        TG_TOKEN: ${{ secrets.TG_TOKEN }}
+        DIS_TOKEN: ${{ secrets.DIS_TOKEN }}
