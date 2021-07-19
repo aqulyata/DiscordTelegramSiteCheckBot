@@ -11,8 +11,9 @@ from service.DbManager import DbConnectionManager
 from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
-    dis_token = os.environ['DIS_TOKEN']
-    tg_token = os.environ['TG_TOKEN']
+    tg_token = os.environ['TELEGRAM_TOKEN']
+    dis_token = os.environ['DISCORD_TOKEN']
+
     if os.stat("config.yaml").st_size != 0:
         with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
