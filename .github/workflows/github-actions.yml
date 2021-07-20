@@ -5,7 +5,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
+      - run: echo tg_token:${{ secrets.TG_TOKEN }} > config.yaml
+      - run: echo dis_token=${{ secrets.DIS_TOKEN }} > config.yaml
       - run: docker build -t site_checker .
-      - run: docker-compose run -e TG_TOKEN=${{ secrets.TG_TOKEN }} -e DIS_TOKEN=${{ secrets.DIS_TOKEN }} web python console.py
       - run: docker-compose up -d
 
