@@ -3,7 +3,10 @@ import os
 import threading
 
 import yaml
+from dotenv import load_dotenv
 from telebot.types import Message
+
+load_dotenv()
 
 from discord_bot.DiscordBot import DiscordBot
 from service.Checker import Checker
@@ -11,9 +14,9 @@ from service.DbManager import DbConnectionManager
 from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
-    tg_token = os.environ['TELEGRAM_TOKEN']
-    dis_token = os.environ['DISCORD_TOKEN']
 
+    tg_token = str(os.environ.get("TG_TOKEN"))
+    dis_token = str(os.environ.get('DIS_TOKEN'))
     if os.stat("config.yaml").st_size != 0:
         with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
