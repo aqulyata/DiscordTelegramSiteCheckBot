@@ -6,5 +6,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker build -t site_checker .
-      - run: docker-compose run -e tg_token=${{ secrets.TG_TOKEN }}dis_token=${{ secrets.DIS_TOKEN }} site_checker -d
+      - run: docker-compose run -e tg_token=${{ secrets.TG_TOKEN }}dis_token=${{ secrets.DIS_TOKEN }} site_checker shell -d
 
