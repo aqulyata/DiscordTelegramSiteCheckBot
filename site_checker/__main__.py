@@ -1,24 +1,26 @@
-import asyncio
+﻿import asyncio
 import os
 import threading
 
 import yaml
 from telebot.types import Message
 
+from discord_bot.DiscordBot import DiscordBot
 from service.Checker import Checker
 from service.DbManager import DbConnectionManager
-from discord_bot.DiscordBot import DiscordBot
 from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
-    if os.stat("../config.yaml").st_size != 0:
-        with open('../config.yaml') as f:
+    tg_token = os.environ['TELEGRAM_TOKEN']
+    dis_token = os.environ['DISCORD_TOKEN']
+
+    if os.stat("config.yaml").st_size != 0:
+        with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
-            dis_token = data['token'][:-1]
             discord_white_list = data['discord_white_list']
             telegramm_bot_white_list = data['telegramm_white_list']
-            tg_token = data['tg_token']
+
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
@@ -50,9 +52,8 @@ if __name__ == '__main__':
 
 
     loop = asyncio.get_event_loop()
-    t2 = threading.Thread(target=lambda: dis_bot.run(dis_token) , args=())
+    t2 = threading.Thread(target=lambda: dis_bot.run(dis_token), args=())
     t2.start()
     t1 = loop.create_task(telegram_bot.polling(none_stop=True, interval=0, timeout=0))
     gathered = asyncio.gather(t1, t2, loop=loop)
     loop.run_until_complete(gathered)
-
