@@ -11,8 +11,6 @@ from service.DbManager import DbConnectionManager
 from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
-    tg_token = os.environ['TELEGRAM_TOKEN']
-    dis_token = os.environ['DISCORD_TOKEN']
 
     if os.stat("config.yaml").st_size != 0:
         with open('config.yaml') as f:
@@ -20,7 +18,8 @@ if __name__ == '__main__':
             prefix = data['prefix']
             discord_white_list = data['discord_white_list']
             telegramm_bot_white_list = data['telegramm_white_list']
-
+            tg_token = data['tg_token']
+            dis_token = data['dis_token']
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
