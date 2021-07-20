@@ -3,10 +3,10 @@ import os
 import threading
 
 import yaml
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from telebot.types import Message
-
-load_dotenv()
+#
+# load_dotenv()
 
 from discord_bot.DiscordBot import DiscordBot
 from service.Checker import Checker
@@ -15,15 +15,16 @@ from telegramm_bot.telegramm_bot import TelegramBot
 
 if __name__ == '__main__':
 
-    tg_token = str(os.environ.get("TG_TOKEN"))
-    dis_token = str(os.environ.get('DIS_TOKEN'))
+    # tg_token = str(os.environ.get("TG_TOKEN"))
+    # dis_token = str(os.environ.get('DIS_TOKEN'))
     if os.stat("config.yaml").st_size != 0:
         with open('config.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             prefix = data['prefix']
             discord_white_list = data['discord_white_list']
             telegramm_bot_white_list = data['telegramm_white_list']
-
+            tg_token = data['tg_token']
+            dis_token = data['dis_token']
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
