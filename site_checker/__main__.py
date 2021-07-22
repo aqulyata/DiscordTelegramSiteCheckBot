@@ -24,7 +24,7 @@ if __name__ == '__main__':
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
     url_repo = db_manager.get_url_repository()
-    checker = Checker(url_repo)
+    checker = Checker[str](url_repo)
     telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix, telegramm_bot_white_list)
     dis_bot = DiscordBot(prefix, discord_white_list, db_manager.get_url_repository(), checker)
     checker.attach(dis_bot)
