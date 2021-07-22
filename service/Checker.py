@@ -30,7 +30,7 @@ class Checker(Publisher):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self, check_res, T) -> None:
+    def notify(self, check_res) -> None:
         print("Subject: Notifying observers...")
         for observer in self._observers:
             observer.update(check_res, self.loop)
