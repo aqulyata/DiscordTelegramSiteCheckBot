@@ -5,12 +5,12 @@ from typing import List
 
 import requests
 
-from service.DbManager import UrlsBdRepository
-from service.Observer import Observer
-from service.Publisher import Publisher
 from command.enums.SiteState import SiteState
 from command.utils.EncodingTime import EncoderTime
 from command.utils.dataclasses.CheckResult import CheckResult
+from service.DbManager import UrlsBdRepository
+from service.Observer import Observer
+from service.Publisher import Publisher
 
 
 class Checker(Publisher):
@@ -21,8 +21,7 @@ class Checker(Publisher):
         self.t1 = None
         self.encoder = EncoderTime()
         self.loop = None
-
-    _observers: List[Observer] = []
+        self._observers: List[Observer] = []
 
     def attach(self, observer: Observer) -> None:
         print("SUBJECT attached on observer")
@@ -31,7 +30,7 @@ class Checker(Publisher):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self, check_res) -> None:
+    def notify(self, check_res, T) -> None:
         print("Subject: Notifying observers...")
         for observer in self._observers:
             observer.update(check_res, self.loop)

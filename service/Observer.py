@@ -5,4 +5,3 @@ class Observer(ABC):
     @abstractmethod
     def update(self, check_res, loop):
         ...
-

@@ -25,7 +25,7 @@ class TelegramBot(AsyncTeleBot, Observer):
         self.register_command(Delete(url_repo, prefix, self))
         self.register_command(Add(url_repo, prefix))
         self.register_command(Start(url_repo, self.checker, prefix))
-        self.register_command(Stop(url_repo, self.checker, prefix))
+        self.register_command(Stop(url_repo, prefix))
         self.register_command(Help(url_repo, prefix))
         self.register_command(Aid(self.prefix, self.get_tuple()))
 

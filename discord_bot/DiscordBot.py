@@ -27,7 +27,7 @@ class DiscordBot(discord.Client, Observer):
         self.register_command(Delete(url_repo, prefix, self))
         self.register_command(Add(url_repo, prefix))
         self.register_command(Start(url_repo, self.checker, prefix))
-        self.register_command(Stop(url_repo, self.checker, prefix))
+        self.register_command(Stop(url_repo, prefix))
         self.register_command(Help(self.commands, prefix))
 
     async def on_ready(self):

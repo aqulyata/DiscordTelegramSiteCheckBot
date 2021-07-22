@@ -24,10 +24,10 @@ class Start(Command):
         self.url_repo.changing_state(True)
         if self.checker.start(time_of_checking):
             print("start")
-            result.append('Вы запустили процесс проверки!')
+            result.append('you have stopped the verification process!')
         else:
             print('started')
-            result.append('Уже запущено!')
+            result.append('Already launched!')
         if len(result) != 0:
             results = '\n'.join(result)
             send_func(f'```{results}```')

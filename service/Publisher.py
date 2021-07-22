@@ -1,18 +1,21 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import TypeVar, Generic
 
 from service.Observer import Observer
 
+T = TypeVar('T')
 
-class Publisher(ABC):
+
+class Publisher(Generic[T]):
 
     @abstractmethod
-    def attach(self, observer: Observer) -> None:
+    def attach(self, observer: Observer[T]) -> None:
         pass
 
     @abstractmethod
-    def detach(self, observer: Observer) -> None:
+    def detach(self, observer: Observer[T]) -> None:
         pass
 
     @abstractmethod
-    def notify(self, check_res) -> None:
+    def notify(self, check_res, T) -> None:
         pass
