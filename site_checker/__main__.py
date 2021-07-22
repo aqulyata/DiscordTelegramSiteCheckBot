@@ -18,13 +18,13 @@ if __name__ == '__main__':
             prefix = data['prefix']
             discord_white_list = data['discord_white_list']
             telegramm_bot_white_list = data['telegramm_white_list']
-            tg_token = data['tg_token']
-            dis_token = data['dis_token']
+            tg_token = '1741041012:AAENee5ykrUW6N_-skjJ2jHN1uwwRZAtiqg'
+            dis_token = 'ODExNTY2ODQ1ODA2Mzc5MDE4.YC0Ehg.tSYg-NlJsZW2idwGSpvtxc_KCeg'
     else:
         raise Exception("File is empty")
     db_manager = DbConnectionManager()
     url_repo = db_manager.get_url_repository()
-    checker = Checker[str](url_repo)
+    checker = Checker(url_repo)
     telegram_bot = TelegramBot(checker, tg_token, url_repo, prefix, telegramm_bot_white_list)
     dis_bot = DiscordBot(prefix, discord_white_list, db_manager.get_url_repository(), checker)
     checker.attach(dis_bot)
