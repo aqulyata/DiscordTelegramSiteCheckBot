@@ -49,10 +49,12 @@ if __name__ == '__main__':
                 args = []
             telegram_bot.commands[cmd].execute(lambda msg: telegram_bot.send_message(message.chat.id, msg), args)
 
-
-    loop = asyncio.get_event_loop()
-    t2 = threading.Thread(target=lambda: dis_bot.run(dis_token), args=())
-    t2.start()
-    t1 = loop.create_task(telegram_bot.polling(none_stop=True, interval=0, timeout=0))
-    gathered = asyncio.gather(t1, t2, loop=loop)
-    loop.run_until_complete(gathered)
+      dis_bot.start(dis_token)
+      telegram_bot.polling(none_stop=True, interval=0, timeout=0)
+            
+#     loop = asyncio.get_event_loop()
+#     t2 = threading.Thread(target=lambda: dis_bot.run(dis_token), args=())
+#     t2.start()
+#     t1 = loop.create_task(telegram_bot.polling(none_stop=True, interval=0, timeout=0))
+#     gathered = asyncio.gather(t1, t2, loop=loop)
+#     loop.run_until_complete(gathered)
