@@ -24,7 +24,7 @@ class Start(Command):
         self.url_repo.changing_state(True)
         if self.checker.start(time_of_checking):
             print("start")
-            result.append('you have stopped the verification process!')
+            result.append('you have start the verification process!')
         else:
             print('started')
             result.append('Already launched!')

@@ -20,9 +20,9 @@ class Delete(Command):
             # channel = self.bot.get_channel(self.url_repo.get_certain_record(number))
             # await channel.delete()
             if self.url_repo.delete_element_in_db(number):
-                send_func('```Удалено!```')
+                send_func('```Deleted!```')
             else:
-                send_func('```Такого элемента нет```')
+                send_func('```There is no such element```')
         else:
             for element in self.url_repo.all_urls():
                 result.append(str(element))

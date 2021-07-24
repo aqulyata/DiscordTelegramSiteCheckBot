@@ -16,14 +16,14 @@ class Add(Command):
         if len(args) == 2:
             if self.url_repo.check_and_recording_url_in_db(args[0], SiteState.UNDEFINDED.value, time.time(), 0, args[1],
                                                            0):
-                send_func("```Добавлено!```")
+                send_func("```Added!```")
             else:
-                send_func("```Уже добавлено```")
+                send_func("```Already added```")
 
         elif len(args) == 0 or 1:
-            send_func('```Вы забыли указать параметр```')
+            send_func('```Sorry, you forgot to specify the parameter```')
         else:
-            send_func('```Извините, вы указали лишний  параметр```')
+            send_func('```Sorry, you added an extra parameter```')
 
     def get_name(self):
         return 'add'
