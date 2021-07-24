@@ -17,5 +17,5 @@ class Publisher(Generic[T]):
         pass
 
     @abstractmethod
-    def notify(self, check_res, T) -> None:
+    def notify(self, check_res : T) -> None:
         pass

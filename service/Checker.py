@@ -30,7 +30,7 @@ class Checker(Publisher):
     def detach(self, observer: Observer) -> None:
         self._observers.remove(observer)
 
-    def notify(self, check_res, T) -> None:
+    def notify(self, check_res) -> None:
         print("Subject: Notifying observers...")
         for observer in self._observers:
             observer.update(check_res, self.loop)
@@ -48,7 +48,7 @@ class Checker(Publisher):
         return True
 
     def check(self, time_of_checking: int):
-        while self.url_repo.get_state():
+        while self.url_repo.get_state() == True:
 
             for resource in self.url_repo.all_info():
                 url = resource[0]
