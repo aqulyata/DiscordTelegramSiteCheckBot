@@ -1,5 +1,5 @@
 bot: 'Sitetatus'
 prefix: '$'
 discord_white_list: [414825980381757440,649339138964717647,276698713655607316]
-telegramm_white_list: [689164015]
+telegramm_white_list: [258078554,689164015]
 black_list: '3123123912'
