@@ -89,8 +89,8 @@ class DiscordBot(discord.Client, Observer):
             else:
                 chanel = self.get_channel(check.chnl_id)
 
-            new_name = ('🟢' + check.chnl_name.upper() + '🟢') if check.status_code == 200 else (
-                    '🔴' + check.chnl_name.upper() + '🔴')
+            new_name = ('🟢' + check.chnl_name.upper()) if check.status_code == 200 else (
+                    '🔴' + check.chnl_name.upper())
             await chanel.edit(name=new_name)
             await chanel.send(f'```🟢{check.url} {check.time_of}🟢```') if check.status_code == 200 else (
                 f'```🔴{check.url} {check.time_of} ERROR = {check.status_code}🔴```')
