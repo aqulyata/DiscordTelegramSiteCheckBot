@@ -1,5 +1,7 @@
 name: Deploy discord_bot discord_bot
-on: [push]
+on:
+  push:
+  workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
     runs-on: self-hosted
