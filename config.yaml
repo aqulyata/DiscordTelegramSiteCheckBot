@@ -1,5 +1,7 @@
 bot: 'Sitetatus'
 prefix: '$'
+tg_token: '1741041012:AAENee5ykrUW6N_-skjJ2jHN1uwwRZAtiqg'
+discord_token: 'ODExNTY2ODQ1ODA2Mzc5MDE4.YC0Ehg.BiE0FfiekNRdL-6HwvkDaUSOAQk'
 discord_white_list: [414825980381757440,649339138964717647,276698713655607316]
 telegramm_white_list: [258078554,689164015]
 black_list: '3123123912'

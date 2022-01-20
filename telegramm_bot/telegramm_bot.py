@@ -12,15 +12,16 @@ from command.Stop import Stop
 from command.base.Command import Command
 
 
-class TelegramBot(AsyncTeleBot, Observer):
+# импорт зависимостей
 
-    def __init__(self, checker, token: str, url_repo: UrlsBdRepository, prefix, white_list):
+class TelegramBot(AsyncTeleBot, Observer): # класс телеграм бота
+
+    def __init__(self, checker, token: str, url_repo: UrlsBdRepository, prefix, white_list): # контсруктор
         super().__init__(token=token)
-        self.commands = {}
-        self.checker = checker
-        self.checker = checker
-        self.prefix = prefix
-        self.white_list = white_list
+        self.commands = {} # словарь с наименованием команд
+        self.checker = checker # сервис проверик
+        self.prefix = prefix #  префикс
+        self.white_list = white_list # белый лист
         self.register_command(Info(url_repo, prefix))
         self.register_command(Delete(url_repo, prefix, self))
         self.register_command(Add(url_repo, prefix))
@@ -28,12 +29,13 @@ class TelegramBot(AsyncTeleBot, Observer):
         self.register_command(Stop(url_repo, prefix))
         self.register_command(Help(url_repo, prefix))
         self.register_command(Aid(self.prefix, self.get_tuple()))
+        # регистрация всех доступных команд
 
-    def register_command(self, command: Command):
-        self.commands[command.get_name()] = command
+    def register_command(self, command: Command): # метод регистрации команд
+        self.commands[command.get_name()] = command # добавление команд в словарь с командами
 
     def update(self, check_res, loop):
         print(check_res)
 
-    def get_tuple(self):
+    def get_tuple(self): # получение команд
         return self.commands

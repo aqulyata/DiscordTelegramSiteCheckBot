@@ -13,33 +13,53 @@ from service.Observer import Observer
 from service.Publisher import Publisher
 
 
+# импорт всех требуемых зависимостей
+
 class Checker(Publisher):
 
+    # описание класса издателя
+
     def __init__(self, url_repo: UrlsBdRepository) -> None:
+        # конструктор
         super().__init__()
         self.url_repo: UrlsBdRepository = url_repo
+        # экземпляр класса для работы с базой данных
         self.t1 = None
+        # поток
         self.encoder = EncoderTime()
+        # переводчик времени в красивый формат
         self.loop = None
+        # loop
         self._observers: List[Observer] = []
+        # список подписчиков
 
     def attach(self, observer: Observer) -> None:
+        # метод подлписки
         print("SUBJECT attached on observer")
         self._observers.append(observer)
+        #  добавление подписчика в список
 
     def detach(self, observer: Observer) -> None:
+        # метод отписки
         self._observers.remove(observer)
+        # удаление из списка подписчика
 
     def notify(self, check_res) -> None:
+        # метод уведомления подписчиков
         print("Subject: Notifying observers...")
         for observer in self._observers:
+            # выбор кажого подписчика из списка
             observer.update(check_res, self.loop)
+            # вызов метода у подписчика на обновление
 
     def start(self, time_of_checking):
+        # стартовый метод
         if self.t1 is not None and self.t1.is_alive():
+            # проверка на наличие потока
             return False
         try:
             self.loop = asyncio.get_event_loop()
+            # создание
         except Exception:
             self.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self.loop)

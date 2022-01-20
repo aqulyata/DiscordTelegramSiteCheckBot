@@ -1,10 +1,14 @@
 from abc import abstractmethod
 from typing import TypeVar, Generic
 
+# имортирование зависимотсей
+
 T = TypeVar('T')
 
 
-class Observer(Generic[T]):
+# инициализация переменной типа generic
+
+class Observer(Generic[T]): # описание класса подписчика
     @abstractmethod
-    def update(self, check_res, loop):
+    def update(self, check_res, loop): # метод при обновлении события 
         ...
