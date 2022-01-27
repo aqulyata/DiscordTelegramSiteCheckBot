@@ -1,12 +1,15 @@
 class Command: # класс команды
 
-    def execute(self, send_func, args: [str]): # основной метод отправкии информации
+    def execute(self, send_func, args: [str]):
+        # основной метод отправкии информации
         ...
 
-    def get_name(self): # получение названия команды
+    def get_name(self):
+        # получение названия команды
         ...
 
-    def get_help(self): # получение информации о команде
+    def get_help(self):
+        # получение информации о команде
         ...
 
 '''

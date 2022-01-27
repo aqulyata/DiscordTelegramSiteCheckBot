@@ -1,5 +1,6 @@
 from telebot import AsyncTeleBot
 
+from command.enums.SiteState import SiteState
 from service.DbManager import UrlsBdRepository
 from service.Observer import Observer
 from command.Add import Add
@@ -36,6 +37,21 @@ class TelegramBot(AsyncTeleBot, Observer): # класс телеграм бот�
 
     def update(self, check_res, loop):
         print(check_res)
+        result = []
+        if check_res.new_status == SiteState.READY:
+            emoji = "🟢"
+        elif check_res.new_status == SiteState.NOT_READY:
+            emoji = '🔴'
+        else:
+            emoji = '🟠'
+        result.append(emoji)
+        result.append(check_res.url)
+        result.append(check_res.time_of)
+        result.append("Status:" + " " + str(check_res.status_code))
+        result.append(emoji)
+        if len(result) != 0:
+            results = ' '.join(result)
+            self.send_message(733698405,results)
 
     def get_tuple(self): # получение команд
         return self.commands

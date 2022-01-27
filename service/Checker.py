@@ -61,14 +61,18 @@ class Checker(Publisher):
             self.loop = asyncio.get_event_loop()
             # создание
         except Exception:
+            # ловля ошибки
             self.loop = asyncio.new_event_loop()
+            # создание новго события
             asyncio.set_event_loop(self.loop)
+            # потсановление нового события
         self.t1 = threading.Thread(target=lambda: self.check(time_of_checking), args=())
+        #
         self.t1.start()
         return True
 
     def check(self, time_of_checking: int):
-        while self.url_repo.get_state() == True:
+        while self.url_repo.get_state():
 
             for resource in self.url_repo.all_info():
                 url = resource[0]
@@ -126,3 +130,12 @@ class Checker(Publisher):
         if len(results) != 0:
             results = '\n'.join(results)
             return results
+
+
+Checker.attach.__doc__ = 'добавляет подписчика в список'
+Checker.detach.__doc__ = 'удаляет подписчика из списка'
+Checker.notify.__doc__ = 'уведомляет подписчиков об изменениях'
+Checker.start.__doc__ = 'запуск проверки с опрделеннным интервалом'
+Checker.check.__doc__ = 'метод проверки интернет ресурса'
+Checker.fast_check.__doc__ = ' быстрый метод проверки'
+Checker.__doc__ = ' сервис провреки интернет ресурса'

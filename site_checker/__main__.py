@@ -48,12 +48,10 @@ if __name__ == '__main__':
                 args = [] # иначе пустые аргументы
             telegram_bot.commands[cmd].execute(lambda msg: telegram_bot.send_message(message.chat.id, msg), args)
             # инициализация команд у телеграм бота
-
-
-    # _create_unverified_https_context = ssl._create_unverified_context
-    dis_bot.run(dis_token)
-    # t2 = threading.Thread(target= dis_bot.run(dis_token))
-    # t2.start()
+    on_message.__doc__ = 'принимает на вход сообщение и выполняет команду, указанную в тексте'
+    # t2 = threading.Thread(target=lambda: )
+    telegram_bot.polling(none_stop=True, interval=0, timeout=0)
+    # t2.start()$
     # loop = asyncio.get_event_loop()
     # t1 = loop.create_task(dis_bot.run(dis_token))
     # loop.run_until_complete(t1)
